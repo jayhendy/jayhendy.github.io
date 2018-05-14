@@ -1,0 +1,67 @@
+* {
+	font-family: 'Abel', sans-serif;
+	
+
+}
+body {
+   background: url("../assets/DSC_0737.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+   background-color: #333333;
+
+}
+
+h1 {
+    color: #333333;
+    text-align: center;
+    font-size: 28px;
+    /*font-family: 'Shadows Into Light', cursive;*/
+}
+h2 {
+    color: #333333;
+    text-align: center;
+    font-size: 18px;
+    /*font-family: 'Shadows Into Light', cursive;*/
+}
+
+p {
+    color: #333333;
+    font-size: 16px;
+}
+.box {
+
+	background-color: #FFFFFF;
+	border-radius: 2px;
+	
+	margin-top:2%;
+
+	padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0, 0.4);
+
+}
+.btn-nice {
+	background-color: #FFFFFF;
+	color: #333333;
+
+	box-shadow: 1px 1px 1px 1px #CCCCCC;
+
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+
+    -webkit-transition: background-color 0.5s; /* Safari */
+    transition: background-color 0.5s;
+}
+
+.btn-nice:hover, .btn-nice:active {
+	color: #FFFFFF;
+	background-color: #229999;
+	text-decoration: none;
+}
