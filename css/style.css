@@ -95,3 +95,18 @@ p {
   background-color: #229999;
   text-decoration: none;
 }
+
+.fa-home {
+  font-size: 20px;
+  background-color: #FFFFFF;
+  color: #333333;
+
+  box-shadow: 1px 1px 1px 1px #CCCCCC;
+
+   width: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    -webkit-transition: background-color 0.5s; /* Safari */
+    transition: background-color 0.5s;
+}
