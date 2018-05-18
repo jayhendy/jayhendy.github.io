@@ -72,3 +72,26 @@ p {
 .text-font {
   font-family: 'Roboto', sans-serif;
 }
+
+/* Style all font awesome icons */
+.fa {
+  font-size: 28px;
+  background-color: #FFFFFF;
+  color: #333333;
+
+  box-shadow: 1px 1px 1px 1px #CCCCCC;
+
+   width: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    -webkit-transition: background-color 0.5s; /* Safari */
+    transition: background-color 0.5s;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+  color: #FFFFFF;
+  background-color: #229999;
+  text-decoration: none;
+}
