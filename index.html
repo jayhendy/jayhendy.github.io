@@ -1,169 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Jay Henderson</title>
 
-<head>
-  <meta name="viewport" content="width=device-width, user-scalable=no" />
-  <title>Marking Menu Demonstration</title>
-  
-  <link href="./css/marking-menu.css" rel="stylesheet">
-  <link href="./css/style.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="tooltipster/dist/css/tooltipster.bundle.min.css" />
-   <link rel="stylesheet" type="text/css" href="/Users/janehenderson/Projects/ZeroDelay/zero-delay-paint/public/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-noir.min.css" />
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Abel|Antic|Cabin|Carrois+Gothic+SC|Fira+Sans|Fjalla+One|Gothic+A1|Hind|Inconsolata|Just+Another+Hand|Karla|Marvel|Nanum+Gothic|Nanum+Gothic+Coding|Open+Sans|Oswald|Oxygen|PT+Sans+Narrow|Raleway|Roboto|Roboto+Condensed|Rubik|Six+Caps|Ubuntu+Condensed|Wire+One|Work+Sans|Yanone+Kaffeesatz" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
-</head>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
 
-<body scroll="no" style="overflow: hidden">
-
-  <!-- <div id="image_to_copy">
-    
-  </div> -->
-  <!-- <div id="instructions">
-    <div class="help">
-      <p>
-        Press and hold to open the menu. Draw in the direction of an item to highlight it. Release to select.
-      </p>
-      <p>
-        Quick draw to select an item without opening a menu (expert mode).
-      </p>
-    </div>
-  </div> -->
-
-
-
-  <div id="toast-wrapper">
-    <span id="toast"></span>
-  </div>
-
-  <div id="main">
-
-
-  <center>
-
-<table>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<br>
-<table>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-
-
-
-    <!-- Shape -->
-<!--     <p>
     <center>
-    <img class="square" src="./images/square.png"\>
-    <img class="square" src="./images/square.png"\>
-    <img class="square" src="./images/square.png"\>
+      <div class="margin-class hidden-xs hidden-sm"></div>
+      <div class="box col-xs-4 col-sm-8 col-md-6">
+      <br>
+        <img src="assets/face.png" alt="Headshot" style="width:35%"><br><br>
+        <h1>Jay Henderson</h1>
+        <hr>
+        <h2>PhD Student</h2>
+        <p>Cheriton School of Computer Science, University of Waterloo<hr>
+        <br>
+        <a class="btn-nice" href="about.html" role="button">About</a>
+        <a class="btn-nice" href="cv.html" role="button">CV</a>
+        <a class="btn-nice" href="#" role="button">Projects</a>
+        <a class="btn-nice" href="contact.html" role="button">Contact</a>
+        </p>
+      </div>
     </center>
-    </p> -->
-
-<div id="begin"></div>
-
-<!-- Shapes -->
-<div class="moveable square shape" value='0' id="Square"></div>
-<div class="moveable circle shape" value='0' id="Circle"></div>
-<div class="moveable triangle shape" value='0' id="Triangle"><div class="tri"></div></div>
-<div class="moveable rect shape" value='0' id="Rectangle"></div>
-
-
-<!-- Avatars -->
-<div class="moveable avatar" value='0' id="Taxi-Driver"><img class="mvImg" src="./images/taxi-driver_.png"\></div>
- <div class="moveable avatar" value='0' id="Athlete"><img class="mvImg" src="./images/athlete_.png"\></div>
- <div class="moveable avatar" value='0' id="Worker"><img class="mvImg" src="./images/engineer_.png"\></div>
- <div class="moveable avatar" value='0' id="Theif"><img class="mvImg" src="./images/thief_.png"\></div>
- <div class="moveable avatar" value='0' id="Chef"><img class="mvImg" src="./images/chef_.png"\></div>
- <div class="moveable avatar" value='0' id="Dentist"><img class="mvImg" src="./images/dentist_.png"\></div>
- <div class="moveable avatar" value='0' id="Dad"><img class="mvImg" src="./images/man.png"\></div>
- <div class="moveable avatar" value='0' id="Police"><img class="mvImg" src="./images/police_.png"\></div>
-
-
- <!-- Food -->
- <div class="moveable food" value='0' id="Soda"><img class="smImg" src="./images/027-soda.png"\></div>
- <div class="moveable food" value='0' id="Mango"><img class="smImg" src="./images/023-mango.png"\></div>
- <div class="moveable food" value='0' id="Cheese"><img class="smImg" src="./images/026-cheese.png"\></div>
- <div class="moveable food" value='0' id="Pepper"><img class="smImg" src="./images/038-jalapeno.png"\></div>
- <div class="moveable food" value='0' id="Apple"><img class="smImg" src="./images/034-apple.png"\></div>
- <div class="moveable food" value='0' id="Burger"><img class="smImg" src="./images/burger.png"\></div>
- <div class="moveable food" value='0' id="Fries"><img class="smImg" src="./images/037-fried-potatoes.png"\></div>
- <div class="moveable food" value='0' id="Pizza"><img class="smImg" src="./images/025-pizza-slice.png"\></div>
-
-<!-- Objects -->
-<div class="moveable objects" value='0' id="Table"><img class="mdImg" src="./images/030-coffee-table.png"\></div>
-<div class="moveable objects" value='0' id="Bed"><img class="bigImg" src="./images/007-bed.png"\></div>
-<div class="moveable objects" value='0' id="Clock"><img class="smImg" src="./images/clock.png"\></div>
-<div class="moveable objects" value='0' id="Scarecrow"><img class="mvImg" src="./images/scarecrow.png"\></div>
-<div class="moveable objects" value='0' id="Dumbbell"><img class="smImg" src="./images/dumbbell.png"\></div>
-<div class="moveable objects" value='0' id="Smartphone"><img class="smImg" src="./images/smartphone.png"\></div>
-<div class="moveable objects" value='0' id="Medal"><img class="smImg" src="./images/medal.png"\></div>
-<div class="moveable objects" value='0' id="Camera"><img class="smImg" src="./images/camera.png"\></div>
-
-<!-- Animals -->
-<div class="moveable animals" value='0' id="Chicken"><img class="mdImg" src="./images/chicken.png"\></div>
-<div class="moveable animals" value='0' id="Dog"><img class="mdImg" src="./images/bulldog.png"\></div>
-<div class="moveable animals" value='0' id="Lion"><img class="mdImg" src="./images/lion.png"\></div>
-<div class="moveable animals" value='0' id="Horse"><img class="mdImg" src="./images/horse.png"\></div>
-<div class="moveable animals" value='0' id="Cat"><img class="mdImg" src="./images/cat.png"\></div>
-<div class="moveable animals" value='0' id="Pig"><img class="mdImg" src="./images/pig.png"\></div>
-<div class="moveable animals" value='0' id="Elephant"><img class="bigImg" src="./images/elephant.png"\></div>
-
-<!-- Scenes -->
-<div class="moveable scenes" value='0' id="Barbershop"><img class="scene" src="./images/barbershop.png"\></div>
-<div class="moveable scenes" value='0' id="Dentist"><img class="scene" src="./images/dentist.png"\></div>
-<div class="moveable scenes" value='0' id="Trees"><img class="scene" src="./images/tree.png"\></div>
-<div class="moveable scenes" value='0' id="Jail"><img class="scene" src="./images/jail.png"\></div>
-<div class="moveable scenes" value='0' id="Gym"><img class="scene" src="./images/weightlifting.png"\></div>
-<div class="moveable scenes" value='0' id="Mall"><img class="scene" src="./images/mall.png"\></div>
-<div class="moveable scenes" value='0' id="Kitchen"><img class="scene" src="./images/kitchen.png"\></div>
-<div class="moveable scenes" value='0' id="Factory"><img class="scene" src="./images/factory.png"\></div>
-
-<!-- Scenes -->
-<div class="moveable vehicles" value='0' id="Taxi"><img class="mvImg" src="./images/taxi.png"\></div>
-<div class="moveable vehicles" value='0' id="Car"><img class="mvImg" src="./images/car.png"\></div>
-<div class="moveable vehicles" value='0' id="Airplane"><img class="mvImg" src="./images/airplane.png"\></div>
-<div class="moveable vehicles" value='0' id="Tractor"><img class="mvImg" src="./images/tractor.png"\></div>
-<div class="moveable vehicles" value='0' id="Police-Car"><img class="mvImg" src="./images/policecar.png"\></div>
-
-    <!-- Font -->
-    <!-- <div class="moveable" value='0' id="Text"><textarea name="Text" cols="40" rows="4"></textarea></div> -->
-    <!-- Speech -->
-    <div class="moveable textpanel" value='0' id="Speech"><img class="mvBubble" src="./images/speak.png"\><textarea name="Text" cols="100" rows="4"></textarea></div>
-    <div class="moveable textpanel" value='0' id="Thought"><img class="mvBubble" src="./images/think.png"\><textarea name="Text" cols="100" rows="4"></textarea></div>
-    <div class="moveable textpanel" value='0' id="Whisper"><img class="mvBuble" src="./images/whisper.png"\><textarea name="Text" cols="100" rows="4"></textarea></div>
-    <div class="moveable textpanel" value='0' id="Alert"><img class="mvImg" src="./images/alert.png"\></div>
-
-    
-        <!-- Trash -->
-    <div id="trash">
-      <img class="otherImg" src="./images/001-trash.png"\>
-    </div>
-
-    <div id="end"></div>
-
-    <!-- Help -->
-    <div id="help">
-      <img class="otherImg tooltip" src="./images/question-mark.png" title="Right click to open the menu. Click an image to select it."\>
-    </div>
-
-  </div>
-
-  
-
-  <script src="./javascript/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="tooltipster/dist/js/tooltipster.bundle.min.js"></script>
-  <script src="./javascript/rxjs.umd.js"></script>
-  <script src="./javascript/marking-menu.js"></script>
-  <script src="./javascript/menus.js"></script>
-  <script src="./javascript/script.js"></script>
-</body>
-
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
 </html>
-
