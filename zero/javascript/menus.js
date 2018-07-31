@@ -60,8 +60,8 @@ const items = [
     children: [
       'Speech',
       'Thought',
-      'Whisper',
-      'Alert'
+      'Whisper'
+      //,'Alert'
     ]
   },
   {
