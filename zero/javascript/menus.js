@@ -25,7 +25,7 @@ const items = [
       'Theif',
       'Chef',
       'Dentist',
-      'Dad',
+      'Man',
       'Police'
     ]
   },
