@@ -79,7 +79,7 @@ function subscribeMainMenu() {
       //getElementInfo();
       //parseData();
       
-      doSelection(selection.name, "Main");
+      //doSelection(selection.name, "Main");
 
       getContextMenu(new_img);
         
@@ -97,7 +97,8 @@ function subscribeContextMenu() {
   contextMenuSubscription = contextMenu.subscribe({
     next(selection) {
       end_date = Date();
-      doSelection(selection.name, "Context");
+      //doSelection(selection.name, "Context");
+      alert("in");
       doContextMenu(selection.name);
     },
     error(error) {
@@ -110,7 +111,7 @@ function subscribeShapeContextMenu() {
   shapeContextMenuSubscription = shapeContextMenu.subscribe({
     next(selection) {
       end_date = Date();
-      doSelection(selection.name, "Shape");
+      //doSelection(selection.name, "Shape");
       doContextMenu(selection.name);
     },
     error(error) {
@@ -123,7 +124,7 @@ function subscribeTextContextMenu() {
   textContextMenuSubscription = textContextMenu.subscribe({
     next(selection) {
       end_date = Date();
-      doSelection(selection.name, "Text");
+      //doSelection(selection.name, "Text");
       doTextContextMenu(selection.name);
     },
     error(error) {
