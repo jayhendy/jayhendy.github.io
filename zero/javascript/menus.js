@@ -101,15 +101,15 @@ const items = [
 
 // context menu creation
 const contextItems = [
-  'Delete',
   'To Back',
+  'Delete',
   'To Front'
 ];
 
 // context menu creation
 const shapeContextItems = [
-  'Delete',
   'To Back',
+  'Delete',
   'To Front',
   {
     name: 'Colours',
@@ -128,7 +128,6 @@ const shapeContextItems = [
 
 // context menu creation
 const textContextItems = [
-  'Delete',
   {
     name: 'Alignment',
     children: [
@@ -137,6 +136,7 @@ const textContextItems = [
       'Right'
     ]
   },
+  'Delete',
   {
     name: 'Font',
     children: [

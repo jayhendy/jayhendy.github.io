@@ -117,7 +117,7 @@ img
 textarea {
   width: 145px;
   font-size: 12px;
-  font-family: 'Comic Sans MS';
+  font-family: Comic Sans MS;
   box-sizing: none;
   border: none;
 }
@@ -138,16 +138,16 @@ textarea:focus {
   height:50px;
 }
 
-#trash {
+#done {
   position: absolute;
   top:85vh;
   left:93vw;
-  display: none;
-  padding: 8px 10px 3px 10px;
+  /*display: none;*/
+  padding: 8px 10px 0px 10px;
 }
 
-#trash:hover {
-  background-color: rgba(255,0,0,0.5);
+#done:hover {
+  background-color: rgba(0,255,0,0.5);
   border-radius:70px;
 }
 
