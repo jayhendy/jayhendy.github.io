@@ -16,7 +16,9 @@ var JOKE_ARRAY = JOKE_1_ARR;
 
 var start_date;
 var end_date;
-var mouse_down = false;
+var right_mouse_down = false;
+var left_mouse_down = false;
+var is_dragging = false;
 var movement_data = [];
 
 $(document).ready(function() {
@@ -81,7 +83,7 @@ function subscribeMainMenu() {
       
       //doSelection(selection.name, "Main");
 
-      getContextMenu(new_img);
+      //getContextMenu(new_img);
         
        
         
@@ -98,7 +100,6 @@ function subscribeContextMenu() {
     next(selection) {
       end_date = Date();
       //doSelection(selection.name, "Context");
-      alert("in");
       doContextMenu(selection.name);
     },
     error(error) {
@@ -154,19 +155,27 @@ Time data functions
 
 $("#main").on('contextmenu', function(event) {
   start_date = new Date();
-  mouse_down = true;
+  left_mouse_down = false;
+  right_mouse_down = true;
 });
 // $("#main").onmousemove = function(event) {
 //   alert("made it");
 //   var time = new Date();
-//   if (mouse_down) {
+//   if (right_mouse_down) {
 //     movement_data.push([event.clientX, event.clientY, time]);
 //   }
 // };
 $("#main").on('mouseup', function(event) {
-  mouse_down = false;
+  right_mouse_down = false;
+  left_mouse_down = false;
 });
 
+$("#main").on('click', function(e) {
+    if (!checkMoveables()) {
+      var elem = $('[value=1]');
+      deselectItem(elem);
+    }
+});    //showTrash();
 
 /**
 
@@ -176,26 +185,57 @@ Drawing functions
 
 $("#main").on('mousemove', function(e){
     var time = new Date();
-    if (mouse_down) {
+    e.preventDefault();
+    if (right_mouse_down) {
       movement_data.push([e.clientX, e.clientY, time]);
-    }
-    else if (!checkMoveables()) {
+    } else if (!checkMoveables() && left_mouse_down) {
+      is_dragging = true;
       moveObj();
-    } 
+    } else {
+      is_dragging = false;
+    }
 });
 
 $(".moveable").on('click', function(e){
-  if ($(this).attr('value') == '1') {
+  e.stopPropagation();
+  if ($(this).attr('value') == '1' && (!is_dragging)) {
 
     deselectItem($(this));
     //hideTrash();
   } else {
-    if (checkMoveables()) {
-      selectItem($(this));
+    if (!checkMoveables()) {
+
+      var elem = $('[value=1]');
+      deselectItem(elem);
       //showTrash();
     }
+    selectItem($(this));
   }
 });
+
+
+$(".moveable").on('mousedown', function(e) {
+  if (right_mouse_down) {
+    left_mouse_down = false;
+  } else {
+    left_mouse_down = true;
+  }
+  
+  // if (checkMoveables()) {
+  //   selectItem($(this));
+  //     //showTrash();
+  // }
+});
+
+$(".moveable").on('mouseup', function(e) {
+  left_mouse_down = false;
+//   if ($(this).attr('value') == '1') {
+
+//     deselectItem($(this));
+//     //hideTrash();
+//   }
+});
+
 
 $("#done").on('click', function (e) {
   getElementInfo();
@@ -313,11 +353,26 @@ function switchToTextContextMenu() {
 
 function selectItem(item) {
   item.attr('value','1');
+  
+  if (item.hasClass('textpanel')) {
+    item.addClass('selectedText');
+  } else if (item.hasClass('shape')) {
+    item.addClass('selectedShape');
+  } else {
+    item.addClass('selectedItem');
+  }
   getContextMenu(item);
 }
 
 function deselectItem(item) {
   item.attr('value', 0);
+  if (item.hasClass('textpanel')) {
+    item.removeClass('selectedText');
+  } else if (item.hasClass('shape')) {
+    item.removeClass('selectedShape');
+  } else {
+    item.removeClass('selectedItem');
+  }
   switchToMainMenu();
 }
 
