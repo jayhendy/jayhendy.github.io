@@ -10,13 +10,14 @@ On load, subscribe main menu
 var PARTICIPANT_ID = "P01";
 var CONDITION = "DELAY";
 //var CONDITION = "NO_DELAY"
+var JOKE_STR = "JOKE_1";
 var JOKE = JOKE_1;
 var JOKE_ARRAY = JOKE_1_ARR;
 
 
 var start_date;
 var end_date;
-var right_mouse_down = false;
+var mouse_down = false;
 var left_mouse_down = false;
 var is_dragging = false;
 var movement_data = [];
@@ -26,6 +27,11 @@ $(document).ready(function() {
   $('.tooltip').tooltipster({theme: 'tooltipster-noir'});
   parseData(JOKE);
 });
+
+// $(window).height();   // returns height of browser viewport
+// $(document).height(); // returns height of HTML document (same as pageHeight in screenshot)
+// $(window).width();   // returns width of browser viewport
+// $(document).width(); // returns width of HTML document (same as pageWidth in screenshot)
 
 var imgInfo = {}
 const TEXT_CSS_PROPERTIES = ['text-align', 'text-decoration', 'font-weight', 'font-style', 'font-family'];
@@ -81,7 +87,7 @@ function subscribeMainMenu() {
       //getElementInfo();
       //parseData();
       
-      //doSelection(selection.name, "Main");
+      doSelection(selection.name, "Main");
 
       //getContextMenu(new_img);
         
@@ -98,9 +104,12 @@ function subscribeMainMenu() {
 function subscribeContextMenu() {
   contextMenuSubscription = contextMenu.subscribe({
     next(selection) {
-      end_date = Date();
-      //doSelection(selection.name, "Context");
+      end_date = new Date();
+      //alert("in");
       doContextMenu(selection.name);
+      doSelection(selection.name, "Context");
+    
+      
     },
     error(error) {
       console.error(error);
@@ -111,9 +120,10 @@ function subscribeContextMenu() {
 function subscribeShapeContextMenu() {
   shapeContextMenuSubscription = shapeContextMenu.subscribe({
     next(selection) {
-      end_date = Date();
-      //doSelection(selection.name, "Shape");
+      end_date = new Date();
+      
       doContextMenu(selection.name);
+      doSelection(selection.name, "Shape");
     },
     error(error) {
       console.error(error);
@@ -124,9 +134,10 @@ function subscribeShapeContextMenu() {
 function subscribeTextContextMenu() {
   textContextMenuSubscription = textContextMenu.subscribe({
     next(selection) {
-      end_date = Date();
-      //doSelection(selection.name, "Text");
+      end_date = new Date();
+      
       doTextContextMenu(selection.name);
+      doSelection(selection.name, "Text");
     },
     error(error) {
       console.error(error);
@@ -153,42 +164,55 @@ Time data functions
 
 **/
 
-$("#main").on('contextmenu', function(event) {
-  start_date = new Date();
-  left_mouse_down = false;
-  right_mouse_down = true;
-});
+//e.target.nodeName != "span"
+
+// $("#main").on('contextmenu', function(event) {
+
+//   start_date = new Date();
+//   mouse_down = true;
+// });
 // $("#main").onmousemove = function(event) {
 //   alert("made it");
 //   var time = new Date();
-//   if (right_mouse_down) {
+//   if (mouse_down) {
 //     movement_data.push([event.clientX, event.clientY, time]);
 //   }
 // };
 $("#main").on('mouseup', function(event) {
-  right_mouse_down = false;
+  mouse_down = false;
   left_mouse_down = false;
+  is_dragging = false;
+  if (!checkMoveables()) {
+    var elem = $('[value=1]');
+    deselectItem(elem);
+  }
 });
+// $("#main").on('mousedown', function(event) {
+//   left_mouse_down = true;
 
-$("#main").on('click', function(e) {
-    if (!checkMoveables()) {
-      var elem = $('[value=1]');
-      deselectItem(elem);
-    }
-});    //showTrash();
 
+  
+// });
+
+// $('#main').on('click', function(event) {
+//   if (!checkMoveables()) {
+//     var elem = $('[value=1]');
+//     deselectItem(elem);
+//   }
+  
+// });
 /**
 
 Drawing functions
 
 **/
-
 $("#main").on('mousemove', function(e){
-    var time = new Date();
     e.preventDefault();
-    if (right_mouse_down) {
+    var time = new Date();
+    if (mouse_down) {
       movement_data.push([e.clientX, e.clientY, time]);
-    } else if (!checkMoveables() && left_mouse_down) {
+    }
+    else if ((!checkMoveables()) && left_mouse_down) {
       is_dragging = true;
       moveObj();
     } else {
@@ -196,45 +220,51 @@ $("#main").on('mousemove', function(e){
     }
 });
 
-$(".moveable").on('click', function(e){
-  e.stopPropagation();
-  if ($(this).attr('value') == '1' && (!is_dragging)) {
-
-    deselectItem($(this));
-    //hideTrash();
-  } else {
-    if (!checkMoveables()) {
-
-      var elem = $('[value=1]');
-      deselectItem(elem);
-      //showTrash();
-    }
-    selectItem($(this));
-  }
-});
-
-
-$(".moveable").on('mousedown', function(e) {
-  if (right_mouse_down) {
-    left_mouse_down = false;
-  } else {
-    left_mouse_down = true;
-  }
-  
-  // if (checkMoveables()) {
-  //   selectItem($(this));
-  //     //showTrash();
-  // }
-});
-
-$(".moveable").on('mouseup', function(e) {
-  left_mouse_down = false;
-//   if ($(this).attr('value') == '1') {
+// $(".moveable").on('click', function(e){
+//   if (($(this).attr('value') == '1') && (!is_dragging)) {
 
 //     deselectItem($(this));
 //     //hideTrash();
+//   } else {
+//     if (checkMoveables()) {
+//       selectItem($(this));
+//       //showTrash();
+//     }
 //   }
+// });
+$(".moveable").on('contextmenu', function(e) {
+  //if (checkMoveables()) {
+    start_date = new Date();
+    mouse_down = true;
+    getContextMenu($(this));
+    selectItem($(this));
+
+
+    //alert('in');
+      //showTrash();
+  //}
 });
+
+$(".moveable").on('mousedown', function(e){
+  left_mouse_down = true;
+  if (($(this).attr('value') == '1') && (!is_dragging)) {
+
+    //deselectItem($(this));
+    //hideTrash();
+  } else {
+    if (checkMoveables()) {
+      selectItem($(this));
+      //showTrash();
+    }
+  }
+});
+$(".moveable").on('mouseup', function (e){
+  // if (!checkMoveables()) {
+  //   var elem = $('[value=1]');
+    deselectItem($(this));
+  // }
+  left_mouse_down = false;
+})
 
 
 $("#done").on('click', function (e) {
@@ -285,6 +315,7 @@ function del() {
   var elem = $('[value=1]');
   elem.attr("value", '0');
   elem.hide();
+  //alert('in');
 }
 
 function toFront() {
@@ -293,7 +324,7 @@ function toFront() {
   elem.hide();
   var new_img = elem.clone(true); 
   new_img.insertBefore( $('#end') );
-  selectItem(new_img);
+  //selectItem(new_img);
   moveObj();
   new_img.show();
 }
@@ -304,7 +335,7 @@ function toBack() {
   elem.hide();
   var new_img = elem.clone(true); 
   new_img.insertAfter( $('#begin') );
-  selectItem(new_img);
+  //selectItem(new_img);
   moveObj();
   new_img.show();
 
@@ -335,6 +366,7 @@ function switchToMainMenu() {
 
 function switchToContextMenu() {
   unsubscribeMenu();
+  //alert("in");
   subscribeContextMenu();
   
 }
@@ -353,30 +385,18 @@ function switchToTextContextMenu() {
 
 function selectItem(item) {
   item.attr('value','1');
-  
-  if (item.hasClass('textpanel')) {
-    item.addClass('selectedText');
-  } else if (item.hasClass('shape')) {
-    item.addClass('selectedShape');
-  } else {
-    item.addClass('selectedItem');
-  }
-  getContextMenu(item);
+  item.addClass("selectItem");
+  //getContextMenu(item);
 }
 
 function deselectItem(item) {
   item.attr('value', 0);
-  if (item.hasClass('textpanel')) {
-    item.removeClass('selectedText');
-  } else if (item.hasClass('shape')) {
-    item.removeClass('selectedShape');
-  } else {
-    item.removeClass('selectedItem');
-  }
+  item.removeClass("selectItem");
   switchToMainMenu();
 }
 
 function doContextMenu(string) {
+  alert("yes");
   switch (string) {
     case "Delete":
       del();
@@ -392,6 +412,8 @@ function doContextMenu(string) {
       changeColour(string);
       break;
   }
+  var elem = $('[value=1]');
+  deselectItem(elem);
 }
 
 function doTextContextMenu(string) {
@@ -590,15 +612,15 @@ function parseData(data) {
 function doSelection(item, menu) {
 
   var is_in_joke;
+  
   if (JOKE_ARRAY.includes(item)) {
     is_in_joke = true;
   } else {
     is_in_joke = false;
   }
-
   var ms_to_select = (end_date.getTime() - start_date.getTime());
-
-  alert(createData(menu, ms_to_select, item, is_in_joke, movement_data));
+ 
+  //alert(createData(menu, ms_to_select, item, is_in_joke, movement_data));
   movement_data = [];
 }
 
@@ -608,6 +630,7 @@ function createData(which_menu, time_down_to_select, item_selected, is_in_joke, 
   var json_data = 
   {
     delay_cond: CONDITION,
+    which_joke: JOKE_STR,
     which_menu: which_menu,
     time_down_to_select: time_down_to_select,
     item_selected: item_selected,
@@ -646,6 +669,19 @@ function createParticipantFile(p_id) {
     type: "POST",
     url: "/create",
     data: {p_id: p_id},
+    success: function(data) {
+    },
+    error: function(jqXHR, textStatus, err) {
+    //  alert('text status '+textStatus+', err '+err)
+    }
+  });
+}
+
+function sendComplete(p_id) {
+  $.ajax({
+    type: "POST",
+    url: "/complete",
+    data: {data: data},
     success: function(data) {
     },
     error: function(jqXHR, textStatus, err) {

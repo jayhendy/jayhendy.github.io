@@ -68,7 +68,7 @@ const items = [
     name: 'Scenes',
     children: [
       'Barbershop',
-      'Clinic',
+      'Dentist',
       'Trees',
       'Jail',
       'Gym',
