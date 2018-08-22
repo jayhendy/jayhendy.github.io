@@ -1,12 +1,6 @@
 body,
 html {
-  /*height: 100%;
-  resize: none; */
-/*
-  max-height: 800px;
-  min-height: 800px;
-  max-width: 1000px;
-  min-width: 1000px;*/
+  height: 100%;
 }
 * {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -21,14 +15,9 @@ html {
 body {
   font-size: calc(10px + 1vw);
   line-height: calc(1.1em + 0.5vw);
-/*
+
   background-image: url("./images/background.png");
   background-repeat: no-repeat;
-*/
-/*  max-height: 800px;
-  min-height: 800px;
-  max-width: 1000px;
-  min-width: 1000px;*/
 }
 
 * {
@@ -243,11 +232,26 @@ td {
     user-select: none;
 }
 
-.selectItem {
-  margin-top: -1px;
-  margin-left: -1px;
-  background-color: rgba(100,100,255,0.1);
-  border: 1px dashed #000000;
+.selectedItem {
+  margin-top: -10px;
+  margin-left: -10px;
 
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  /*background-color: rgba(100,100,255,0.1);*/
+  border: 3px solid #FF5599;
 }
 
+.selectedText {
+  margin-top: -3px;
+  margin-left: -3px;
+  border: 3px solid #FF5599;
+}
+
+.selectedShape {
+  margin-top: -3px;
+  margin-left: -3px;
+
+  border: 3px solid #FF5599;
+}

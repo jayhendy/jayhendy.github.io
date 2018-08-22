@@ -65,10 +65,10 @@ const items = [
     ]
   },
   {
-    name: 'Scenes',
+    name: 'Set-items',
     children: [
       'Barbershop',
-      'Dentist',
+      'Clinic',
       'Trees',
       'Jail',
       'Gym',
