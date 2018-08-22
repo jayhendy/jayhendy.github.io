@@ -12,17 +12,17 @@ var JOKE_4 = '[{"id":"Square","css_item":{"left":"182px","top":"5px"},"css_shape
 
 var JOKE_1_ARR = 
 [
-	'Square', 'Rectangle', 'Man', 'Dog', 'Cat', 'Speech', 'Taxi-Driver', 'Taxi', 'Helvetica', 'Bold', 'Underline', 'Blue', 'Dark Grey', 'Green'
+	'RAIN_CATS_DOGS','Square', 'Rectangle', 'Man', 'Dog', 'Cat', 'Speech', 'Taxi-Driver', 'Taxi', 'Helvetica', 'Bold', 'Underline', 'Blue', 'Dark Grey', 'Green'
 ]
 var JOKE_2_ARR = 
 [
-	'Square', 'Rectangle', 'Gym', 'Dumbbell', 'Man', 'Athlete', 'Speech', 'Pizza', 'Comic Sans', 'Light Grey', 'Dark Grey', 'Bold'
+	'PIZZA_FITNESS','Square', 'Rectangle', 'Gym', 'Dumbbell', 'Man', 'Athlete', 'Speech', 'Pizza', 'Comic Sans', 'Light Grey', 'Dark Grey', 'Bold'
 ]
 var JOKE_3_ARR = 
 [
-	'Square', 'Rectangle', 'Factory', 'Man', 'Worker', 'Speech', 'Cheese', 'Circle', 'Yellow', 'Blue', 'Dark Grey', 'Courier'
+	'CHEESE_FACTORY', 'Square', 'Rectangle', 'Factory', 'Man', 'Worker', 'Speech', 'Cheese', 'Circle', 'Yellow', 'Blue', 'Dark Grey', 'Courier'
 ]
 var JOKE_4_ARR = 
 [
-	'Square', 'Rectangle', 'Kitchen', 'Man', 'Chef', 'Speech', 'Thought', 'Table', 'Fries', 'Light Grey', 'Dark Grey', 'Italic', 'Helvetica'
+	'FRIES_GREASE','Square', 'Rectangle', 'Kitchen', 'Man', 'Chef', 'Speech', 'Thought', 'Table', 'Fries', 'Light Grey', 'Dark Grey', 'Italic', 'Helvetica'
 ]

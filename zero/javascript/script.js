@@ -9,6 +9,8 @@ On load, subscribe main menu
 
 var PARTICIPANT_ID = "P01";
 var CONDITION = "DELAY";
+
+var position = 0;
 //var CONDITION = "NO_DELAY"
 var JOKE = JOKE_1;
 var JOKE_ARRAY = JOKE_1_ARR;
@@ -25,6 +27,7 @@ $(document).ready(function() {
   subscribeMainMenu();
   $('.tooltip').tooltipster({theme: 'tooltipster-noir'});
   parseData(JOKE);
+  createParticipantFile(PARTICIPANT_ID);
 });
 
 var imgInfo = {}
@@ -81,7 +84,7 @@ function subscribeMainMenu() {
       //getElementInfo();
       //parseData();
       
-      //doSelection(selection.name, "Main");
+      doSelection(selection.name, "Main");
 
       //getContextMenu(new_img);
         
@@ -100,7 +103,10 @@ function subscribeContextMenu() {
     next(selection) {
       end_date = Date();
       //doSelection(selection.name, "Context");
-      doContextMenu(selection.name);
+      var elem = $('[value=1]');
+      doContextMenu(selection.name, elem);
+
+      deselectItem(elem);
     },
     error(error) {
       console.error(error);
@@ -113,7 +119,10 @@ function subscribeShapeContextMenu() {
     next(selection) {
       end_date = Date();
       //doSelection(selection.name, "Shape");
-      doContextMenu(selection.name);
+      var elem = $('[value=1]');
+      doContextMenu(selection.name, elem);
+
+      deselectItem(elem);
     },
     error(error) {
       console.error(error);
@@ -126,7 +135,10 @@ function subscribeTextContextMenu() {
     next(selection) {
       end_date = Date();
       //doSelection(selection.name, "Text");
-      doTextContextMenu(selection.name);
+      var elem = $('[value=1]');
+      
+      doTextContextMenu(selection.name, elem);
+      deselectItem(elem);
     },
     error(error) {
       console.error(error);
@@ -158,24 +170,17 @@ $("#main").on('contextmenu', function(event) {
   left_mouse_down = false;
   right_mouse_down = true;
 });
-// $("#main").onmousemove = function(event) {
-//   alert("made it");
-//   var time = new Date();
-//   if (right_mouse_down) {
-//     movement_data.push([event.clientX, event.clientY, time]);
-//   }
-// };
+
+
 $("#main").on('mouseup', function(event) {
+  if (!checkMoveables() && !right_mouse_down) {
+ 
+      var elem = $('[value=1]');
+      deselectItem(elem);
+  }
   right_mouse_down = false;
   left_mouse_down = false;
 });
-
-$("#main").on('click', function(e) {
-    if (!checkMoveables()) {
-      var elem = $('[value=1]');
-      deselectItem(elem);
-    }
-});    //showTrash();
 
 /**
 
@@ -196,45 +201,19 @@ $("#main").on('mousemove', function(e){
     }
 });
 
-$(".moveable").on('click', function(e){
+$(".moveable").on('mousedown', function(e){
   e.stopPropagation();
-  if ($(this).attr('value') == '1' && (!is_dragging)) {
-
-    deselectItem($(this));
-    //hideTrash();
-  } else {
-    if (!checkMoveables()) {
-
-      var elem = $('[value=1]');
-      deselectItem(elem);
-      //showTrash();
-    }
-    selectItem($(this));
-  }
-});
-
-
-$(".moveable").on('mousedown', function(e) {
   if (right_mouse_down) {
     left_mouse_down = false;
   } else {
     left_mouse_down = true;
   }
-  
-  // if (checkMoveables()) {
-  //   selectItem($(this));
-  //     //showTrash();
-  // }
+ 
+  selectItem($(this));
+ 
 });
 
-$(".moveable").on('mouseup', function(e) {
-  left_mouse_down = false;
-//   if ($(this).attr('value') == '1') {
 
-//     deselectItem($(this));
-//     //hideTrash();
-//   }
-});
 
 
 $("#done").on('click', function (e) {
@@ -281,31 +260,33 @@ function moveObj() {
 //   $("#trash").hide();
 // }
 
-function del() {
-  var elem = $('[value=1]');
+function del(elem) {
+  //var elem = $('[value=1]');
   elem.attr("value", '0');
   elem.hide();
 }
 
-function toFront() {
-  var elem = $('[value=1]');
+function toFront(elem) {
+  //var elem = $('[value=1]');
   elem.attr("value", '0');
   elem.hide();
   var new_img = elem.clone(true); 
   new_img.insertBefore( $('#end') );
-  selectItem(new_img);
-  moveObj();
+  deselectItem(new_img);
+  //selectItem(new_img);
+  //moveObj();
   new_img.show();
 }
 
-function toBack() {
-  var elem = $('[value=1]');
+function toBack(elem) {
+ // var elem = $('[value=1]');
   elem.attr("value", '0');
   elem.hide();
   var new_img = elem.clone(true); 
   new_img.insertAfter( $('#begin') );
-  selectItem(new_img);
-  moveObj();
+  deselectItem(new_img);
+  //selectItem(new_img);
+  //moveObj();
   new_img.show();
 
 }
@@ -376,35 +357,35 @@ function deselectItem(item) {
   switchToMainMenu();
 }
 
-function doContextMenu(string) {
+function doContextMenu(string, elem) {
   switch (string) {
     case "Delete":
-      del();
+      del(elem);
       switchToMainMenu();
       break;
     case "To Front":
-      toFront();
+      toFront(elem);
       break;
     case "To Back":
-      toBack();
+      toBack(elem);
       break;
     default:
-      changeColour(string);
+      changeColour(string, elem);
       break;
   }
 }
 
-function doTextContextMenu(string) {
+function doTextContextMenu(string, elem) {
 
   if (string == "Left" || string == "Right" || string == "Center") {
-    changeAlignment(string);
+    changeAlignment(string, elem);
   } else if (string == "Bold"  || string == "Italic" || string == "Underline" || string == "Normal") {
-    changeStyle(string);
+    changeStyle(string, elem);
   } else if (string == "Delete") {
-    del();
+    del(elem);
     switchToMainMenu();
   } else if (string == "Helvetica" || "Comic Sans" || "Impact" || "Courier") {
-    changeFont(string);
+    changeFont(string, elem);
   }
 }
 
@@ -421,7 +402,7 @@ function getContextMenu(item) {
 
 
 
-function changeColour(arg) {
+function changeColour(arg, elem) {
   var colour = "#000000";
   switch (arg) {
     case "Blue":
@@ -451,7 +432,7 @@ function changeColour(arg) {
   }
 
   //var colour = arg.toLowerCase();
-  var elem = $('[value=1]');
+  //var elem = $('[value=1]');
   if (elem.attr('id') == "Triangle") {
     elem.find( ".tri" ).css( "border-bottom", "100px solid " + colour );
   } else {
@@ -459,15 +440,15 @@ function changeColour(arg) {
   }
 }
 
-function changeAlignment(arg) {
+function changeAlignment(arg, item) {
   var alignment = arg.toLowerCase();
-  var elem = $('[value=1]').find('textarea');
+  var elem = item.find('textarea');
   elem.css( "text-align", alignment);
 }
 
-function changeStyle(arg) {
+function changeStyle(arg, item) {
   var style = arg.toLowerCase();
-  var elem = $('[value=1]').find('textarea');
+  var elem = item.find('textarea');
   if (style == "underline") {
     elem.css( "text-decoration", style);
   } else if (style == "bold") {
@@ -481,8 +462,8 @@ function changeStyle(arg) {
   }
 }
 
-function changeFont(arg) {
-  var elem = $('[value=1]').find('textarea');
+function changeFont(arg, item) {
+  var elem = item.find('textarea');
   if (arg == "Comic Sans") {
     elem.css('font-family', 'Comic Sans MS');
   } else {
@@ -497,6 +478,7 @@ function getElementInfo() {
     //if ($(this).hasClass())
     if ($(this).is(':visible')) {
 
+      $(this).hide();
       var obj = {}
       obj["id"] = $(this).attr('id');
       obj["css_item"] = $(this).css(ITEM_CSS_PROPERTIES);
@@ -527,8 +509,15 @@ function getElementInfo() {
     }
   });
 
-  alert(JSON.stringify(dict.slice(0, 15)));
-  alert(JSON.stringify(dict.slice(15, dict.length)));
+  sendItemData(JSON.stringify(dict));
+
+  JOKE = JOKE_2;
+  JOKE_ARRAY = JOKE_2_ARR;
+
+
+  parseData(JOKE);
+  // alert(JSON.stringify(dict.slice(0, 15)));
+  // alert(JSON.stringify(dict.slice(15, dict.length)));
 
   //parseData(JSON.stringify(dict));
 }
@@ -598,7 +587,7 @@ function doSelection(item, menu) {
 
   var ms_to_select = (end_date.getTime() - start_date.getTime());
 
-  alert(createData(menu, ms_to_select, item, is_in_joke, movement_data));
+  sendData(createData(menu, ms_to_select, item, is_in_joke, movement_data));
   movement_data = [];
 }
 
@@ -608,6 +597,7 @@ function createData(which_menu, time_down_to_select, item_selected, is_in_joke, 
   var json_data = 
   {
     delay_cond: CONDITION,
+    which_joke: JOKE_ARRAY[0],
     which_menu: which_menu,
     time_down_to_select: time_down_to_select,
     item_selected: item_selected,
@@ -641,10 +631,33 @@ function sendData(data) {
   });
 }
 
+function sendItemData(data) {
+    $.ajax({
+    type: "POST",
+    url: "/complete",
+    data: {data: data},
+    success: function(data) {
+    },
+    error: function(jqXHR, textStatus, err) {
+    //   alert('text status '+textStatus+', err '+err)
+    }
+  });
+}
+
 function createParticipantFile(p_id) {
   $.ajax({
     type: "POST",
     url: "/create",
+    data: {p_id: p_id},
+    success: function(data) {
+    },
+    error: function(jqXHR, textStatus, err) {
+    //  alert('text status '+textStatus+', err '+err)
+    }
+  });
+  $.ajax({
+    type: "POST",
+    url: "/create_item_data",
     data: {p_id: p_id},
     success: function(data) {
     },
