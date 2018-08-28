@@ -399,10 +399,10 @@ var toastMessage = (function(dom) {
     
     if (correct == 1) {
       dom.style.backgroundColor = "#33FF33";
-      dom.innerHTML = "&#10004;"
+      dom.innerHTML = "&#10004; " + message;
     } else {
       dom.style.backgroundColor = "Red";
-      dom.innerHTML = "X"
+      dom.innerHTML = "X " + message;
     }
     //dom.innerHTML = message;
     dom.classList.add('shown');

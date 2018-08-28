@@ -1,4 +1,4 @@
-/*!
+-/*!
  * Marking Menu Javascript Library v0.9.0-beta.0
  * https://github.com/QuentinRoy/Marking-Menu
  *
@@ -18,6 +18,26 @@
 
 
     var centerPoint = [0,0];
+    var endPoint = [0,0];
+    var confirmationMark = false;
+    var itemConfirmationMark = null;
+    var firstItemConfirmation = 0;
+
+  // Return an item DOM element from its id.
+    // var getItemDomForConfirmation = function getItemDomForConfirmation(itemId) {
+    //   return document.getElementById('.marking-menu-item[data-item-id="' + itemId + '"]');
+    // };
+
+    // Mark an item as active.
+    var setActiveForConfirmation = function setActiveForConfirmation(itemId) {
+     
+      // Set the active class.
+      if (itemId || itemId === 0) {
+        $("[data-item-id='" + itemId + "']").className +='active';
+      }
+    };
+
+  
 
     var source = function (angleInRadians) {
         // angleInDegree = angleInRadians * (180 / Math.PI)  
@@ -350,10 +370,25 @@
       }), operators.share());
 
       var end$ = moves$.pipe(operators.startWith({}), operators.last(), operators.map(function (n) {
-        return _extends({}, n, {
-          type: n.active && n.active.isLeaf() ? 'select' : 'cancel',
-          selection: n.active
-        });
+        //console.log("in end$")
+        //console.log(n.active);
+        if (confirmationMark && (itemConfirmationMark != null)) {
+          if (firstItemConfirmation == 1) {
+            //console.log(firstItemConfirmation);
+            n.active = itemConfirmationMark;
+            confirmationMark = false;
+            itemConfirmationMark = null;
+            firstItemConfirmation = 0;
+          
+          }
+        }
+         
+          return _extends({}, n, {
+            type: n.active && n.active.isLeaf() ? 'select' : 'cancel',
+            selection: n.active
+          });
+        
+        
       }));
 
       return rxjs.merge(moves$, end$).pipe(operators.share());
@@ -397,6 +432,12 @@
           menuSelection_ = _ref3$menuSelection === undefined ? menuSelection : _ref3$menuSelection,
           _ref3$subMenuNavigati = _ref3.subMenuNavigation,
           subMenuNavigation_ = _ref3$subMenuNavigati === undefined ? subMenuNavigation : _ref3$subMenuNavigati;
+
+      // if ((confirmationMark == true) && (itemConfirmationMark != null)) {
+      //   console.log(itemConfirmationMark.id);
+      //   menuForConfirmation.setActive(itemConfirmationMark.id);
+      //   confirmationMark = false;
+      // }
 
       // Observe the local navigation.
       var move$ = noviceMoves_(drag$, menu, {
@@ -676,6 +717,7 @@
       var minSegmentSize = expectedSegmentLength / 3;
       // Get the segments of the marking menus.
       centerPoint = articulationPoints[1];
+      endPoint = articulationPoints[2];
 
       var segments = pointsToSegments(articulationPoints)
       // Change the representation of the segment to include its length.
@@ -760,25 +802,26 @@
           maxDepth: -1,
           requireMenu: true
         });
-        console.log(menu);
         if (!menu || menu.isRoot()) {
          
-          // var itemParent = recognizeMMStrokeForConfirmation(evt.stroke, model, {
-          //   //maxDepth: -1,
-          //   requireMenu: true
-          // });
           var item = recognizeMMStroke(evt.stroke, model);
-          //createMenu(itemParent, model, [100,100], );
-          // return noviceNavigation(drag$.pipe(operators.skip(1)), secondMenu, _extends({}, options, {
-          //   menuCenter: centerPoint
-          // }));
-          //return _extends({}, evt, { type: 'select', selection: item });
-          //return rxjs.of(_extends({}, evt, { type: 'cancel' }));
-          //return rxjs.of(_extends({}, evt));
+          if ((item.parent != null) && (item != null)) {
 
-          return noviceNavigation(drag$.pipe(operators.skip(1)), item.parent, _extends({}, options, {
-            menuCenter: centerPoint
-          }));
+            confirmationMark = true;
+            itemConfirmationMark = item;
+
+            return noviceNavigation(drag$.pipe(operators.skip(1)), item.parent, _extends({}, options, {
+              //type: 'move',
+              menuCenter: centerPoint
+            }));
+          } else {
+            return _extends({}, n, { type: 'cancel' });
+          }
+       
+          // return noviceNavigation(drag$.pipe(operators.skip(1)), item.parent, evt.stroke).pipe(operators.map(function (n){
+          //   return _extends({}, n, { menuCenter: centerPoint });
+          // }));
+           //subNav(drag$, n.active, _extends({ menuCenter: n.position }, navOptions));
 
           //return expertNavigation( drag$.pipe(operators.skip(1)), model, evt.stroke);
           //return;
@@ -1171,6 +1214,7 @@
 
       // Return an item DOM element from its id.
       var getItemDom = function getItemDom(itemId) {
+        //console.log(itemId);
         return main.querySelector('.marking-menu-item[data-item-id="' + itemId + '"]');
       };
 
@@ -1382,6 +1426,14 @@
       var gestureFeedback = createGestureFeedback(parentDOM);
 
       var closeMenu = function closeMenu() {
+       // console.log("in closeMenu of connectLayout");
+
+        // if (confirmationMark && (itemConfirmationMark != null)) {
+        //   //do the notify
+        //   confirmationMark = false; 
+        //   itemConfirmationMark = null;
+        // }
+        
         menu.remove();
         menu = null;
       };
@@ -1389,6 +1441,11 @@
       var openMenu = function openMenu(model, position) {
         var cbr = parentDOM.getBoundingClientRect();
         menu = createMenuLayout(parentDOM, model, [position[0] - cbr.left, position[1] - cbr.top]);
+        if (confirmationMark && (itemConfirmationMark != null)) {
+          menu.setActive(itemConfirmationMark.id);
+          noviceMove(endPoint);
+          firstItemConfirmation = 0;
+        }
       };
 
       var setActive = function setActive(id) {
@@ -1402,6 +1459,9 @@
       };
 
       var noviceMove = rafThrottle(function (position) {
+        if (firstItemConfirmation == 1) {
+          firstItemConfirmation = 2;
+        }
         if (upperStrokeCanvas) {
           upperStrokeCanvas.clear();
           if (position) {
@@ -1409,7 +1469,12 @@
             upperStrokeCanvas.drawStroke(upperStroke);
           }
           upperStrokeCanvas.drawPoint(upperStroke[0]);
+          
         }
+        if (confirmationMark && (firstItemConfirmation == 0)) {
+          firstItemConfirmation = 1;
+        }
+        
       });
 
       var expertDraw = rafThrottle(function (stroke) {
@@ -1461,7 +1526,7 @@
           case 'open':
             {
               // eslint-disable-next-line no-param-reassign
-              console.log("is this where we enter");
+            
               parentDOM.style.cursor = 'none';
               if (menu) closeMenu();
               swapUpperStroke();
@@ -1478,7 +1543,7 @@
           case 'select':
           case 'cancel':
             // eslint-disable-next-line no-param-reassign
-
+            //console.log("in case select || cancel")
             parentDOM.style.cursor = '';
             if (menu) closeMenu();
             //showGestureFeedback();
@@ -1839,6 +1904,7 @@
       }
       // Else, return an observable on the selections.
       return connectedNavigation$.pipe(operators.filter(function (notification) {
+        //console.log(notification.type);
         return notification.type === 'select';
       }), operators.pluck('selection'), operators.share());
     });
