@@ -716,8 +716,6 @@
       var articulationPoints = getStrokeArticulationPoints(stroke, expectedSegmentLength, angleThreshold);
       var minSegmentSize = expectedSegmentLength / 3;
       // Get the segments of the marking menus.
-      centerPoint = articulationPoints[1];
-      endPoint = articulationPoints[2];
 
       var segments = pointsToSegments(articulationPoints)
       // Change the representation of the segment to include its length.
@@ -733,9 +731,18 @@
       .map(function (seg) {
         return { angle: segmentAngle.apply(undefined, seg.points), length: seg.length };
       });
-
-      
       var item = findMMItem(model, segments, maxDepth);
+      if (item != null) {
+        if (!(item.parent.isRoot())) {
+          centerPoint = articulationPoints[1]
+          endPoint = articulationPoints[2];
+        } else {
+          centerPoint = articulationPoints[0];
+          endPoint = articulationPoints[1];
+        }
+      }
+      
+      
       if (requireLeaf) {
         return item && item.isLeaf() ? item : null;
       }
@@ -805,6 +812,7 @@
         if (!menu || menu.isRoot()) {
          
           var item = recognizeMMStroke(evt.stroke, model);
+
 
           if ((item != null) && (item.parent != null)) {
 
