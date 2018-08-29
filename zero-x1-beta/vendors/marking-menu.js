@@ -805,7 +805,8 @@
         if (!menu || menu.isRoot()) {
          
           var item = recognizeMMStroke(evt.stroke, model);
-          if ((item.parent != null) && (item != null)) {
+
+          if ((item != null) && (item.parent != null)) {
 
             confirmationMark = true;
             itemConfirmationMark = item;
@@ -815,7 +816,7 @@
               menuCenter: centerPoint
             }));
           } else {
-            return _extends({}, n, { type: 'cancel' });
+            return rxjs.of(_extends({}, evt, { type: 'cancel' }));
           }
        
           // return noviceNavigation(drag$.pipe(operators.skip(1)), item.parent, evt.stroke).pipe(operators.map(function (n){
@@ -1441,7 +1442,7 @@
       var openMenu = function openMenu(model, position) {
         var cbr = parentDOM.getBoundingClientRect();
         menu = createMenuLayout(parentDOM, model, [position[0] - cbr.left, position[1] - cbr.top]);
-        if (confirmationMark && (itemConfirmationMark != null)) {
+        if (confirmationMark && (itemConfirmationMark != null) && (menu != null)) {
           menu.setActive(itemConfirmationMark.id);
           noviceMove(endPoint);
           firstItemConfirmation = 0;
