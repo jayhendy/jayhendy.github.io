@@ -1450,9 +1450,11 @@
       var openMenu = function openMenu(model, position) {
         var cbr = parentDOM.getBoundingClientRect();
         menu = createMenuLayout(parentDOM, model, [position[0] - cbr.left, position[1] - cbr.top]);
-        if (confirmationMark && (itemConfirmationMark != null) && (menu != null)) {
-          menu.setActive(itemConfirmationMark.id);
+        if (confirmationMark && (itemConfirmationMark != null) && (menu != null) && (firstItemConfirmation == 0)) {
+          
           noviceMove(endPoint);
+          menu.setActive(itemConfirmationMark.id);
+          
           firstItemConfirmation = 0;
         }
       };
