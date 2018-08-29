@@ -29,7 +29,6 @@ var end_date;
 var ms_appear_to_end;
 var ms_to_select;
 var movement_data = [];
-
 var block_num = 0;
 
 // where you started
@@ -140,9 +139,9 @@ function createArray(item_dict, num) {
 
 
 const delay = {
-  minSelectionDist : 10,
-  minMenuSelectionDist : 40,
-  subMenuOpeningDelay : 25,
+  minSelectionDist : 40,
+  minMenuSelectionDist : 80,
+  subMenuOpeningDelay : 20,
   movementsThreshold : 5,
   noviceDwellingTime : 1000/3,
   strokeColor : 'black',
@@ -151,9 +150,9 @@ const delay = {
   notifySteps : false
 }
 const no_delay = {
-  minSelectionDist : 10,
-  minMenuSelectionDist : 40,
-  subMenuOpeningDelay : 0,
+  minSelectionDist : 40,
+  minMenuSelectionDist : 80,
+  subMenuOpeningDelay : 20,
   movementsThreshold : 5,
   noviceDwellingTime : 0,
   strokeColor : 'black',

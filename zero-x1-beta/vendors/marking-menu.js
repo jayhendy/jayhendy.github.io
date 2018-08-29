@@ -717,6 +717,9 @@
       var minSegmentSize = expectedSegmentLength / 3;
       // Get the segments of the marking menus.
 
+      // console.log(requireLeaf);
+      // console.log(articulationPoints);
+      
       var segments = pointsToSegments(articulationPoints)
       // Change the representation of the segment to include its length.
       .map(function (seg) {
@@ -742,13 +745,16 @@
         }
       }
       
-      
+      //console.log(model);
+      var str_arr = item.id.split("-");
       if (requireLeaf) {
         return item && item.isLeaf() ? item : null;
       }
-      if (requireMenu) {
+      if (requireMenu && (str_arr[0] == str_arr[1])) {
+
         return item && item.isLeaf() ? item.parent : item;
       }
+
       return item;
     };
 
@@ -806,12 +812,13 @@
       return dwellings(draw(drag$, { initStroke: initStroke }), options.noviceDwellingTime, options.movementsThreshold).pipe(operators.take(1), operators.map(function (evt) {
         // Look for the furthest menu (not leaf).
         var menu = recognizeMMStroke(evt.stroke, model, {
-          maxDepth: -1,
+          //maxDepth: -1,
           requireMenu: true
         });
-        if (!menu || menu.isRoot()) {
-         
-          var item = recognizeMMStroke(evt.stroke, model);
+        if (!menu || menu.isRoot() || menu.isLeaf()) {
+          var item = recognizeMMStroke(evt.stroke, model, {
+            requireLeaf: true
+          });
 
 
           if ((item != null) && (item.parent != null)) {
