@@ -1,119 +1,119 @@
 const MENU_1_4x4_ARRAY = [
-		'Math',
+		'Ocean',
 		'Art',
-		'History',
+		'Math',
 		'Pastry',
-		'Fudge',
+		'History',
 		'Shoes',
-		'Coat',
-		'Ocean'
+		'Fudge',
+		'Coat'
 ];
 
 const MENU_2_4x4_ARRAY = [
-		'Ketchup',
+		'Soccer',
 		'Jay',
-		'Dove',
+		'Ketchup',
 		'Wrench',
-		'Pliers',
+		'Dove',
 		'Hockey',
-		'Baseball',
-		'Soccer'
+		'Pliers',
+		'Baseball'
 ];
 
 const MENU_1_8x8_ARRAY = [
-		'Truck',
+		'Cod',
 		'Limo',
-		'Sedan',
+		'Truck',
 		'Red',
-		'Green',
+		'Sedan',
 		'Mushroom',
-		'Hail',
-		'Cod'
+		'Green',
+		'Hail'	
 ];
 
 const MENU_2_8x8_ARRAY = [
+		'Lemon',
 		'Engineer',
-		'Nurse',
 		'Accountant',
-		'Beagle',
+		'Nurse',
 		'Daschund',
-		'Guitar',
+		'Beagle',
 		'Spanish',
-		'Lemon'
+		'Guitar'
 ];
 
 const MENU_1_4 = [
+	'Laptop',
 	'Keyboard',
-	'Camera',
 	'Speaker',
-	'Laptop'
+	'Camera'
 ];
 
 const MENU_2_4 = [
+	'Monitor',
 	'Computer',
-	'Tablet',
 	'Printer',
-	'Monitor'
-	
+	'Tablet'
 ];
 
 const MENU_1_8 = [
-	'Glass',
+	'Fork',
 	'Plate',
-	'Mug',
+	'Glass',
 	'Bowl',
-	'Cup',
+	'Mug',
 	'Knife',
-	'Spoon',
-	'Fork'
+	'Cup',
+	'Spoon'
 ];
 
 const MENU_2_8 = [
-	'Glue',
+	'Eraser',
 	'Marker',
-	'Label',
+	'Glue',
 	'Staple',
-	'Pen',
+	'Label',
 	'Notes',
-	'Tape',
-	'Eraser'
+	'Pen',
+	'Tape'
 ];
 
 
 const MENU_1_4x4 = [
 {
-	name: 'Subjects',
-	children: [
-		'Math',
-		'Art',
-		'History',
-		'English'
-		
-		
-	]
-},{
-	name: 'Dessert',
-	children: [
-		'Cake',
-		'Donut',
-		'Pastry',
-		'Fudge'
-	]
-},{
-	name: 'Clothing',
-	children: [
-		'Shoes',
-		'T-Shirt',
-		'Coat',
-		'Jeans'
-	]
-},{
 	name: 'Water',
 	children: [
+		'Ocean',
 		'Bay',
-		'Creek',
 		'Pond',
-		'Ocean'
+		'Creek'
+	]
+},
+{
+	name: 'Subjects',
+	children: [
+		'English',
+		'Math',
+		'History',
+		'Art'
+	]
+},
+{
+	name: 'Clothing',
+	children: [
+		'Jeans',
+		'Shoes',
+		'Coat',
+		'T-Shirt'
+	]
+},
+{
+	name: 'Dessert',
+	children: [	
+		'Fudge',
+		'Cake',
+		'Pastry',
+		'Donut'
 	]
 }
 ];
@@ -121,36 +121,37 @@ const MENU_1_4x4 = [
 
 const MENU_2_4x4 = [
 {
+	name: 'Sports',
+	children: [
+		'Golf',
+		'Hockey',
+		'Soccer',
+		'Baseball'
+	]
+},
+{
 	name: 'Condiments',
 	children: [
+		'Ketchup',
 		'Jam',
-		'Mustard',
 		'Butter',
-		'Ketchup'
+		'Mustard'
+	]
+},{
+	name: 'Tools',
+	children: [	
+		'Pliers',
+		'Drill',
+		'Hammer',	
+		'Wrench'	
 	]
 },{
 	name: 'Birds',
 	children: [
+		'Flamingo',
 		'Jay',
-		'Dove',
 		'Eagle',
-		'Flamingo'
-	]
-},{
-	name: 'Tools',
-	children: [
-		'Drill',
-		'Wrench',
-		'Hammer',
-		'Pliers'
-	]
-},{
-	name: 'Sports',
-	children: [
-		'Hockey',
-		'Baseball',
-		'Soccer',
-		'Golf'
+		'Dove'
 	]
 }
 ];
@@ -158,100 +159,100 @@ const MENU_2_4x4 = [
 
 const MENU_1_8x8 = [
 {
-	name: 'Trees',
+	name: 'Fish',
 	children: [
-	'Oak',
-	'Elm',
-	'Maple',
-	'Birch',
-	'Spruce',
-	'Willow',
-	'Pine',
-	'Fir'
+	'Anchovy',
+	'Cod',
+	'Bass',
+	'Shark',
+	'Flounder',
+	'Herring',
+	'Tuna',
+	'Marlin'
 	]
 },{
-	name: 'Auto',
+	name: 'Trees',
 	children: [
-	'Jeep',
-	'Limo',
-	'Hatchback',
-	'Truck',
-	'Van',
-	'Wagon',
-	'Sedan',
-	'Convertible'
+	'Fir',
+	'Oak',
+	'Maple',
+	'Elm',
+	'Spruce',
+	'Birch',
+	'Pine',
+	'Willow'
 	]
 },{
 	name: 'Buildings',
 	children: [
-	'Airport',
+	'Palace',
 	'Bakery',
-	'Church',
+	'Airport',
 	'Hospital',
-	'Stadium',
+	'Church',
 	'Museum',
-	'Jail',
-	'Palace'
+	'Stadium',
+	'Jail'
+	]
+},{
+	name: 'Auto',
+	children: [
+	'Convertible',
+	'Limo',
+	'Jeep',
+	'Truck',
+	'Hatchback',
+	'Wagon',
+	'Van',
+	'Sedan'
 	]
 },{
 	name: 'Seating',
 	children: [
-	'Bench',
+	'Throne',
 	'Ottoman',
-	'Chair',
+	'Bench',
 	'Sofa',
-	'Futon',
+	'Chair',
 	'Loveseat',
-	'Couch',
-	'Throne'
-	]
-},{
-	name: 'Colors',
-	children: [
-	'Red',
-	'Blue',
-	'Yellow',
-	'Green',
-	'Purple',
-	'Indigo',
-	'Magenta',
-	'Violet'
+	'Futon',
+	'Couch'
 	]
 },{
 	name: 'Vegetables',
 	children: [
-	'Carrot',
+	'Onion',
 	'Broccoli',
-	'Turnip',
+	'Carrot',
 	'Potato',
-	'Spinach',
+	'Turnip',
 	'Asparagus',
-	'Mushroom',
-	'Onion'
+	'Spinach',
+	'Mushroom'
+	]
+},{
+	name: 'Colors',
+	children: [
+	'Violet',
+	'Blue',
+	'Red',
+	'Green',
+	'Yellow',
+	'Indigo',
+	'Purple',
+	'Magenta'
 	]
 },{
 	name: 'Weather',
 	children: [
-	'Hail',
+	'Lightening',
 	'Rain',
-	'Snow',
+	'Hail',
 	'Sun',
-	'Fog',
+	'Snow',
 	'Clouds',
-	'Thunder',
-	'Lightening'
-	]
-},{
-	name: 'Fish',
-	children: [
-	'Bass',
-	'Cod',
-	'Flounder',
-	'Shark',
-	'Tuna',
-	'Herring',
-	'Marlin',
-	'Anchovy'
+	'Fog',
+	'Thunder'
 	]
 }
 ];
@@ -259,100 +260,100 @@ const MENU_1_8x8 = [
 
 const MENU_2_8x8 = [
 {
-	name: 'Languages',
+	name: 'Music',
 	children: [
-	'Spanish',
-	'English',
-	'French',
-	'German',
-	'Dutch',
-	'Japanese',
-	'Korean',
-	'Russian'
+	'Drumkit',
+	'Flute',
+	'Piano',
+	'Violin',
+	'Tuba',
+	'Guitar',
+	'Cello',
+	'Horn'
 	]
 },{
 	name: 'Beverages',
 	children: [
-	'Beer',
+	'Latte',
 	'Coffee',
-	'Wine',
+	'Beer',
 	'Juice',
-	'Milkshake',
+	'Wine',
 	'Soda Pop',
-	'Tea',
-	'Latte'
+	'Milkshake',
+	'Tea'
 	]
 },{
-	name: 'Jobs',
+	name: 'Languages',
 	children: [
-	'Engineer',
-	'Doctor',
-	'Teacher',
-	'Police',
-	'Professor',
-	'Nurse',
-	'Accountant',
-	'Firefighter'
+	'Russian',
+	'English',
+	'Spanish',
+	'German',
+	'French',
+	'Japanese',
+	'Dutch',
+	'Korean'
 	]
 },{
 	name: 'Gems',
 	children: [
-	'Diamond',
+	'Pearl',
 	'Emerald',
-	'Topaz',
+	'Diamond',
 	'Ruby',
-	'Sapphire',
+	'Topaz',
 	'Opal',
-	'Amethyst',
-	'Pearl'
+	'Sapphire',
+	'Amethyst'
 	]
 },{
-	name: 'Storage',
+	name: 'Jobs',
 	children: [
-	'Drawer',
-	'Cabinet',
-	'Shelf',
-	'Bookcase',
-	'Locker',
-	'Safe',
-	'Trunk',
-	'Cubby'
+	'Firefighter',
+	'Doctor',
+	'Engineer',
+	'Police',
+	'Teacher',
+	'Nurse',
+	'Professor',
+	'Accountant'
 	]
 },{
 	name: 'Dogs',
 	children: [
-	'Corgie',
+	'Spaniel',
 	'Beagle',
-	'Poodle',
+	'Corgie',
 	'Husky',
-	'Daschund',
+	'Poodle',
 	'Retriever',
-	'Terrier',
-	'Spaniel'
+	'Daschund',
+	'Terrier'
+	]
+},{
+	name: 'Storage',
+	children: [
+	'Cubby',
+	'Cabinet',
+	'Drawer',
+	'Bookcase',
+	'Shelf',
+	'Safe',
+	'Locker',
+	'Trunk'
 	]
 },{
 	name: 'Fruit',
 	children: [
-	'Apple',
+	'Grape',
 	'Banana',
-	'Kiwi',
+	'Apple',
 	'Raspberry',
-	'Lemon',
+	'Kiwi',
 	'Peach',
-	'Mango',
-	'Grape'
-	]
-},{
-	name: 'Music',
-	children: [
-	'Piano',
-	'Flute',
-	'Tuba',
-	'Violin',
-	'Cello',
-	'Guitar',
-	'Horn',
-	'Drumkit'
+	'Lemon',
+	'Mango'
 	]
 }
 ];
