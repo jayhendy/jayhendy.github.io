@@ -32,9 +32,15 @@ p {
 }
 .box {
 
+<<<<<<< HEAD
 /* 	background-color: rgba(20, 20, 30, 0.8); */
 /* 	opacity: 0.5; */
 	background-color:rgba(20, 20, 30, 0.8);
+=======
+	background-color: #FFFFFF;
+/* 	opacity: 0.5; */
+/* 	background-color:rgba(255, 255, 255, 0.9); */
+>>>>>>> 74d43a17537a3687752ebed4e3badf5d8a7a5966
 	border-radius: 2px;
 	
 	/*margin-top:2%;*/
@@ -115,9 +121,12 @@ p {
     -webkit-transition: background-color 0.5s; /* Safari */
     transition: background-color 0.5s;
 }
+<<<<<<< HEAD
 .margins {
   padding-left: 40px;
   padding-right: 40px;
   text-align:left;
   text-indent: 30px;
 }
+=======
+>>>>>>> 74d43a17537a3687752ebed4e3badf5d8a7a5966
