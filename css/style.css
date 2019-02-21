@@ -9,7 +9,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-   background-color: #FFFFFF;
+   background-color: rgba(20, 20, 30, 0.8);
 
 }
 
@@ -118,12 +118,9 @@ p {
     -webkit-transition: background-color 0.5s; /* Safari */
     transition: background-color 0.5s;
 }
-<<<<<<< HEAD
 .margins {
   padding-left: 40px;
   padding-right: 40px;
   text-align:left;
   text-indent: 30px;
 }
-=======
->>>>>>> 74d43a17537a3687752ebed4e3badf5d8a7a5966
