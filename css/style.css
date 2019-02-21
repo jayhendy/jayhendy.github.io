@@ -9,30 +9,32 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-   background-color: #333333;
+   background-color: #FFFFFF;
 
 }
 
 h1 {
-    color: #333333;
+    color: #FFFFFF;
     text-align: center;
     font-size: 28px;
     /*font-family: 'Shadows Into Light', cursive;*/
 }
 h2 {
-    color: #333333;
+    color: #FFFFFF;
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
     /*font-family: 'Shadows Into Light', cursive;*/
 }
 
 p {
-    color: #333333;
-    font-size: 16px;
+    color: #FFFFFF;
+    font-size: 18px;
 }
 .box {
 
-	background-color: #FFFFFF;
+/* 	background-color: rgba(20, 20, 30, 0.8); */
+/* 	opacity: 0.5; */
+	background-color:rgba(20, 20, 30, 0.8);
 	border-radius: 2px;
 	
 	/*margin-top:2%;*/
@@ -49,11 +51,11 @@ p {
   margin-top: 3%;
 }
 .btn-nice {
-	background-color: #FFFFFF;
-	color: #333333;
-
+	background-color: rgba(20, 20, 30, 0.8);
+	color: #FFFFFF;
+/*
 	box-shadow: 1px 1px 1px 1px #CCCCCC;
-
+*/
     padding-left: 15px;
     padding-top: 10px;
     padding-right: 15px;
@@ -64,9 +66,11 @@ p {
 }
 
 .btn-nice:hover, .btn-nice:active, .btn-nice:focus {
-	color: #FFFFFF;
-	background-color: #229999;
+	color: rgb(20, 20, 30);
+    background-color: #FFFFFF;
+	font-weight: bold;
 	text-decoration: none;
+
 }
 
 .text-font {
@@ -76,10 +80,10 @@ p {
 /* Style all font awesome icons */
 .fa {
   font-size: 28px;
-  background-color: #FFFFFF;
-  color: #333333;
+  background-color: rgba(20, 20, 30, 0.8);
+  color: #FFFFFF;
 
-  box-shadow: 1px 1px 1px 1px #CCCCCC;
+  /*box-shadow: 1px 1px 1px 1px #CCCCCC;*/
 
    width: 50px;
     padding-top: 10px;
@@ -91,17 +95,18 @@ p {
 
 /* Add a hover effect if you want */
 .fa:hover {
-  color: #FFFFFF;
-  background-color: #229999;
+  color: rgb(20, 20, 30);
+  background-color: #FFFFFF;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .fa-home {
   font-size: 20px;
-  background-color: #FFFFFF;
-  color: #333333;
+  background-color: rgba(20, 20, 30, 0.8);
+  color: #FFFFFF;
 
-  box-shadow: 1px 1px 1px 1px #CCCCCC;
+  /*box-shadow: 1px 1px 1px 1px #CCCCCC;*/
 
    width: 40px;
     padding-top: 10px;
@@ -109,4 +114,10 @@ p {
 
     -webkit-transition: background-color 0.5s; /* Safari */
     transition: background-color 0.5s;
+}
+.margins {
+  padding-left: 40px;
+  padding-right: 40px;
+  text-align:left;
+  text-indent: 30px;
 }
