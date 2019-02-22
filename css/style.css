@@ -26,10 +26,23 @@ h2 {
     /*font-family: 'Shadows Into Light', cursive;*/
 }
 
-p {
+.p-class {
     color: #FFFFFF;
     font-size: 18px;
 }
+
+.p-for-projects {
+  font-size: 15px;
+  /*color: #FFFFFF;*/
+
+}
+
+.small-p {
+  font-size: 15px;
+  color: #FFFFFF;
+
+}
+
 .box {
 
 /* 	background-color: rgba(20, 20, 30, 0.8); */
@@ -124,3 +137,42 @@ p {
   text-align:left;
   text-indent: 30px;
 }
+.white-hr {
+  border-color:#FFFFFF; 
+  width:80%;
+}
+
+
+.media-body {
+  
+  padding-left:10px;
+}
+
+.media-project {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #FFFFFF;
+  text-decoration: none;
+      -webkit-transition: background-color 0.5s; /* Safari */
+    transition: background-color 0.5s;
+}
+
+.media-project:hover, .media-project:active, .media-project:focus {
+  background-color: #FFFFFF;
+  
+  color: rgb(20, 20, 30);
+  text-decoration: none;
+  /*font-weight: bold;*/
+
+}
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+
