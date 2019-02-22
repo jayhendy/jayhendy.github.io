@@ -137,6 +137,14 @@ h2 {
   text-align:left;
   text-indent: 30px;
 }
+
+.margins-xs {
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align:left;
+  text-indent: 30px;
+}
+
 .white-hr {
   border-color:#FFFFFF; 
   width:80%;
