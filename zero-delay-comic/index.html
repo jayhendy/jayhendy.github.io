@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+  <title>Marking Menu Demonstration</title>
+  
+  <link href="./css/marking-menu.css" rel="stylesheet">
+  <link href="./css/style.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="tooltipster/dist/css/tooltipster.bundle.min.css" />
+   <link rel="stylesheet" type="text/css" href="/Users/janehenderson/Projects/ZeroDelay/experiment2_march_2019/public/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-noir.min.css" />
+
+</head>
+
+<body scroll="no" style="overflow: hidden" oncontextmenu="return false;">
+
+  <!-- <div id="image_to_copy">
+    
+  </div> -->
+  <!-- <div id="instructions">
+    <div class="help">
+      <p>
+        Press and hold to open the menu. Draw in the direction of an item to highlight it. Release to select.
+      </p>
+      <p>
+        Quick draw to select an item without opening a menu (expert mode).
+      </p>
+    </div>
+  </div> -->
+
+
+
+  <div id="toast-wrapper">
+    <span id="toast"></span>
+  </div>
+
+  <div id="main">
+
+
+  <center>
+
+<table>
+  <tr>
+    <td class="sky"><div class="grass"></div></td>
+   <!--  <td></td>
+    <td></td> -->
+  </tr>
+</table>
+<br>
+<table>
+  <tr>
+    <td class="sky"><div class="grass"></div></td>
+   <!--  <td></td>
+    <td></td> -->
+  </tr>
+</table>
+
+
+
+    <!-- Shape -->
+<!--     <p>
+    <center>
+    <img class="square" src="./images/square.png"\>
+    <img class="square" src="./images/square.png"\>
+    <img class="square" src="./images/square.png"\>
+    </center>
+    </p> -->
+
+<div id="begin"></div>
+
+<!-- Shapes -->
+<div class="moveable divider shape moveableParentCSS" value='0' id="Divider"></div>
+<div class="moveable circle shape moveableParentCSS" value='0' id="Circle"></div>
+<div class="moveable triangle shape" value='0' id="Triangle"><div class="tri"></div></div>
+<div class="moveable rect shape moveableParentCSS" value='0' id="Rectangle"></div>
+
+
+<!-- Avatars -->
+<div class="moveable avatar" value='0' id="Taxi-Driver"><img value="0" class="mvImg moveablePng" src="./images/taxi-driver_.png"\></div>
+ <div class="moveable avatar" value='0' id="Athlete"><img value="0" class="mvImg moveablePng" src="./images/athlete_.png"\></div>
+ <div class="moveable avatar" value='0' id="Worker"><img value="0" class="mvImg moveablePng" src="./images/engineer_.png"\></div>
+ <div class="moveable avatar" value='0' id="Criminal"><img value="0" class="mdImg moveablePng" src="./images/thief_.png"\></div>
+ <div class="moveable avatar" value='0' id="Chef"><img value="0" class="mvImg moveablePng" src="./images/chef_.png"\></div>
+ <div class="moveable avatar" value='0' id="Dentist"><img value="0" class="mvImg moveablePng" src="./images/surgeon.png"\></div>
+ <div class="moveable avatar" value='0' id="Man"><img value="0" class="mvImg moveablePng" src="./images/man.png"\></div>
+ <div class="moveable avatar" value='0' id="Police"><img value="0" class="mdImg moveablePng" src="./images/police_.png"\></div>
+
+
+ <!-- Food -->
+ <div class="moveable food" value='0' id="Soda"><img value="0" class="smImg moveablePng" src="./images/027-soda.png"\></div>
+ <div class="moveable food" value='0' id="Mango"><img value="0" class="smImg moveablePng" src="./images/023-mango.png"\></div>
+ <div class="moveable food" value='0' id="Cheese"><img value="0" class="smImg moveablePng" src="./images/026-cheese.png"\></div>
+ <div class="moveable food" value='0' id="Pepper"><img value="0" class="smImg moveablePng" src="./images/038-jalapeno.png"\></div>
+ <div class="moveable food" value='0' id="Apple"><img value="0" class="smImg moveablePng" src="./images/apple.png"\></div>
+ <div class="moveable food" value='0' id="Burger"><img value="0" class="smImg moveablePng" src="./images/024-burger.png"\></div>
+ <div class="moveable food" value='0' id="Fries"><img value="0" class="smImg moveablePng" src="./images/037-fried-potatoes.png"\></div>
+ <div class="moveable food" value='0' id="Pizza"><img value="0" class="smImg moveablePng" src="./images/025-pizza-slice.png"\></div>
+
+<!-- Objects -->
+<div class="moveable objects" value='0' id="Table"><img value="0" class="mdImg moveablePng" src="./images/030-coffee-table.png"\></div>
+<div class="moveable objects" value='0' id="Bicycle"><img value="0" class="mdImg moveablePng" src="./images/bicycle.png"\></div>
+<div class="moveable objects" value='0' id="Cone"><img value="0" class="smImg moveablePng" src="./images/cone.png"\></div>
+<div class="moveable objects" value='0' id="Streetlight"><img value="0" class="mvImg moveablePng" src="./images/street-light.png"\></div>
+<div class="moveable objects" value='0' id="Dumbbell"><img value="0" class="smImg moveablePng" src="./images/dumbbell.png"\></div>
+<div class="moveable objects" value='0' id="Barrier"><img value="0" class="mdImg moveablePng" src="./images/barrier.png"\></div>
+<div class="moveable objects" value='0' id="Sign"><img value="0" class="mdImg moveablePng" src="./images/sign.png"\></div>
+<div class="moveable objects" value='0' id="Camera"><img value="0" class="smImg moveablePng" src="./images/camera.png"\></div>
+
+<!-- Animals -->
+<div class="moveable animals" value='0' id="Chicken"><img value="0" class="smImg moveablePng" src="./images/chicken.png"\></div>
+<div class="moveable animals" value='0' id="Dog"><img value="0" class="smImg moveablePng" src="./images/bulldog.png"\></div>
+<div class="moveable animals" value='0' id="Lion"><img value="0" class="mdImg moveablePng" src="./images/lion.png"\></div>
+<div class="moveable animals" value='0' id="Monkey"><img value="0" class="mdImg moveablePng" src="./images/monkey.png"\></div>
+<div class="moveable animals" value='0' id="Cat"><img value="0" class="smImg moveablePng" src="./images/cat.png"\></div>
+<div class="moveable animals" value='0' id="Pig"><img value="0" class="mdImg moveablePng" src="./images/pig.png"\></div>
+<div class="moveable animals" value='0' id="Elephant"><img value="0" class="bigImg moveablePng" src="./images/elephant.png"\></div>
+<div class="moveable animals" value='0' id="Frog"><img value="0" class="smImg moveablePng" src="./images/frog.png"\></div>
+
+<!-- nature -->
+<div class="moveable nature" value='0' id="Tree"><img value="0" class="mdImg moveablePng" src="./images/tree.png"\></div>
+<div class="moveable nature" value='0' id="Flowers"><img value="0" class="mdImg moveablePng" src="./images/flowers.png"\></div>
+<div class="moveable nature" value='0' id="Lightening"><img value="0" class="mdImg moveablePng" src="./images/lightening.png"\></div>
+<div class="moveable nature" value='0' id="Grass"><img value="0" class="mdImg moveablePng" src="./images/grass.png"\></div>
+<!-- <div class="moveable nature" value='0' id="Gym"><img value="0" class="scene" src="./images/weightlifting.png"\></div>
+<div class="moveable nature" value='0' id="Mall"><img value="0" class="scene" src="./images/mall.png"\></div>
+<div class="moveable nature" value='0' id="Kitchen"><img value="0" class="scene" src="./images/kitchen.png"\></div>
+<div class="moveable nature" value='0' id="Factory"><img value="0" class="scene" src="./images/factory.png"\></div> -->
+
+<!-- vehicles -->
+<div class="moveable vehicles" value='0' id="Taxi"><img value="0" id="taxi-click" class="mvImg moveablePng" src="./images/taxi.png"\></div>
+<div class="moveable vehicles" value='0' id="Car"><img value="0" class="mdImg moveablePng" src="./images/car.png"\></div>
+<div class="moveable vehicles" value='0' id="Airplane"><img value="0" class="smImg moveablePng" src="./images/airplane.png"\></div>
+<div class="moveable vehicles" value='0' id="Tractor"><img value="0" class="mvImg moveablePng" src="./images/tractor.png"\></div>
+<div class="moveable vehicles" value='0' id="Police-Car"><img value="0" class="mdImg moveablePng" src="./images/policecar.png"\></div>
+
+    <!-- Font -->
+    <!-- <div class="moveable" value='0' id="Text"><textarea name="Text" cols="40" rows="4"></textarea></div> -->
+    <!-- Speech -->
+    <div class="moveable textpanel textbox" value='0' id="Speech"><img class="mvBubble moveablePng" src="./images/speak.png"\><textarea name="Text" cols="100" rows="4"></textarea></div>
+<!--     <div class="moveable textpanel" value='0' id="Thought"><img value="0" class="mvBubble" src="./images/think.png"\><textarea name="Text" cols="100" rows="4"></textarea></div>
+    <div class="moveable textpanel" value='0' id="Whisper"><img value="0" class="mvBuble" src="./images/whisper.png"\><textarea name="Text" cols="100" rows="4"></textarea></div>
+    <div class="moveable textpanel" value='0' id="Alert"><img value="0" class="mvImg moveablePng" src="./images/alert.png"\></div> -->
+
+ <!-- Symbols-->
+<div class="moveable symbols" value='0' id="Menu"><img value="0" class="smImg moveablePngFull" src="./images/menu.png"\></div>
+ <div class="moveable symbols" value='0' id="Warning"><img value="0" class="smImg moveablePngFull" src="./images/warning.png"\></div>
+ <div class="moveable symbols" value='0' id="Compose"><img value="0" class="smImg moveablePngFull" src="./images/compose.png"\></div>
+ <div class="moveable symbols" value='0' id="Email"><img value="0" class="smImg moveablePngFull" src="./images/mail.png"\></div>
+ <div class="moveable symbols" value='0' id="Link"><img value="0" class="smImg moveablePngFull" src="./images/link.png"\></div>
+ <div class="moveable symbols" value='0' id="Zoom"><img value="0" class="smImg moveablePngFull" src="./images/zoom.png"\></div>
+ <div class="moveable symbols" value='0' id="Calendar"><img value="0" class="smImg moveablePngFull" src="./images/calendar.png"\></div>
+ <div class="moveable symbols" value='0' id="Add"><img value="0" class="smImg moveablePngFull" src="./images/add.png"\></div>
+   
+    <!-- Emoticons-->
+<div class="moveable emoticons" value='0' id="Happy"><img value="0" class="smImg moveablePngFull" src="./images/happy.png"\></div>
+ <div class="moveable emoticons" value='0' id="Sad"><img value="0" class="smImg moveablePngFull" src="./images/sad.png"\></div>
+ <div class="moveable emoticons" value='0' id="Cry"><img value="0" class="smImg moveablePngFull" src="./images/cry.png"\></div>
+ <div class="moveable emoticons" value='0' id="Wink"><img value="0" class="smImg moveablePngFull" src="./images/wink.png"\></div>
+ <div class="moveable emoticons" value='0' id="Angry"><img value="0" class="smImg moveablePngFull" src="./images/angry.png"\></div>
+ <div class="moveable emoticons" value='0' id="Cool"><img value="0" class="smImg moveablePngFull" src="./images/cool.png"\></div>
+ <div class="moveable emoticons" value='0' id="Ill"><img value="0" class="smImg moveablePngFull" src="./images/ill.png"\></div>
+ <div class="moveable emoticons" value='0' id="Yawn"><img value="0" class="smImg moveablePngFull" src="./images/yawn.png"\></div>
+
+  <!-- Stickmen -->
+  <div class="moveable stickmen" value='0' id="Stickwoman"><img value="0" class="smImg moveablePng" src="./images/woman.png"\></div>
+ <div class="moveable stickmen" value='0' id="Stickman"><img value="0" class="smImg moveablePng" src="./images/stickman.png"\></div>
+ <div class="moveable stickmen" value='0' id="Accessible"><img value="0" class="smImg moveablePng" src="./images/accessible.png"\></div>
+ <div class="moveable stickmen" value='0' id="Baby"><img value="0" class="smImg moveablePng" src="./images/baby.png"\></div>
+
+ <!-- Graphs -->
+  <div class="moveable graphs" value='0' id="Pie"><img value="0" class="mvImg moveablePng" src="./images/pie-chart.png"\></div>
+ <div class="moveable graphs" value='0' id="Increase"><img value="0" class="mvImg moveablePng" src="./images/increase.png"\></div>
+ <div class="moveable graphs" value='0' id="Decrease"><img value="0" class="mvImg moveablePng" src="./images/decrease.png"\></div>
+ <div class="moveable graphs" value='0' id="Squiggle"><img value="0" class="mvImg moveablePngFull" src="./images/squiggle.png"\></div>
+
+
+ <!-- Lines -->
+  <div class="moveable lines" value='0' id="Solid"><img value="0" class="mdImg moveablePng" src="./images/solid.png"\></div>
+ <div class="moveable lines" value='0' id="Diagonal"><img value="0" class="mdImg moveablePng" src="./images/diagonal.png"\></div>
+ <div class="moveable lines" value='0' id="Thick"><img value="0" class="mdImg moveablePng" src="./images/thick.png"\></div>
+<div class="moveable lines" value='0' id="Dotted"><img value="0" class="mdImg moveablePng" src="./images/dotted.png"\></div>
+        
+    <!-- Arrows -->
+  <div class="moveable arrows" value='0' id="Single"><img value="0" class="smImg moveablePngFull" src="./images/single.png"\></div>
+ <div class="moveable arrows" value='0' id="Double"><img value="0" class="smImg moveablePngFull" src="./images/double.png"\></div>
+ <div class="moveable arrows" value='0' id="Triple"><img value="0" class="smImg moveablePngFull" src="./images/triple.png"\></div>
+<div class="moveable arrows" value='0' id="Filled"><img value="0" class="smImg moveablePngFull" src="./images/fill.png"\></div>
+<div class="moveable arrows" value='0' id="Angled"><img value="0" class="xsImg moveablePngFull" src="./images/diagonal-arrow.png"\></div>
+  <!-- Elements --> 
+<div class="moveable svgRectangularElement" value='0' id="Rounded">
+  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 49.33603 33.311091" style="enable-background:new 0 0 49.33603 33.311091;" xml:space="preserve">
+  <path
+     style="fill:#ffffff;stroke:#FFFFFF;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 20.833852,32.229022 C 12.226866,31.222922 5.1210097,27.236625 2.2244106,21.789356 1.2079319,19.877793 1.1019143,19.493667 1.0017409,17.359348 0.9138709,15.487169 1.0044109,14.677677 1.4570104,13.28914 3.7807318,6.1600795 13.605471,0.99090654 24.831532,0.99090654 c 10.553678,0 19.837452,4.42508596 22.977338,10.95208246 4.07394,8.468649 -3.56096,17.613978 -16.634161,19.924941 -2.751694,0.48642 -7.769708,0.661645 -10.340857,0.361092 z"
+     id="path4534"
+     inkscape:connector-curvature="0" class="moveableSvg"/>
+     <ellipse
+     style="fill:#ffffff;stroke:#000000;stroke-width:0.96243769;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path844"
+     cx="24.668015"
+     cy="16.655544"
+     rx="24.186796"
+     ry="16.174326" class="moveableSvg"/>
+     <rect
+     style="fill:#ffffff;stroke:#000000;stroke-width:0.80000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect823"
+     width="48.45034"
+     height="32.532936"
+     x="0.55850536"
+     y="0.4988997"
+     rx="5" class="moveableSvg"/>
+  </svg>
+</div>
+
+
+
+
+ <div class="moveable elements" value='0' id="Squared"><div class="square moveableCSS"></div></div>
+ <div class="moveable elements" value='0' id="Dashed"><div class="dashed moveableCSS"></div></div>
+<!-- <div class="moveable elements" value='0' id="Oval"><div class="oval moveableCSS"></div></div> -->
+
+<div class="moveable svgRectangularElement" value='0' id="Oval">
+  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 49.33603 33.311091" style="enable-background:new 0 0 49.33603 33.311091;" xml:space="preserve">
+    <path
+     style="fill:#ffffff;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 20.833852,32.229022 C 12.226866,31.222922 5.1210097,27.236625 2.2244106,21.789356 1.2079319,19.877793 1.1019143,19.493667 1.0017409,17.359348 0.9138709,15.487169 1.0044109,14.677677 1.4570104,13.28914 3.7807318,6.1600795 13.605471,0.99090654 24.831532,0.99090654 c 10.553678,0 19.837452,4.42508596 22.977338,10.95208246 4.07394,8.468649 -3.56096,17.613978 -16.634161,19.924941 -2.751694,0.48642 -7.769708,0.661645 -10.340857,0.361092 z"
+     id="path4534"
+     inkscape:connector-curvature="0" class="moveableSvg"/>
+     <ellipse
+     style="fill:#FFFFFF;stroke:#000000;stroke-width:0.96243769;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path844"
+     cx="24.668015"
+     cy="16.655544"
+     rx="24.186796"
+     ry="16.174326" class="moveableSvg"/>
+   </svg>
+</div>
+
+<div class="moveable svgElement" value='0' id="Star"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 49.94 49.94" style="enable-background:new 0 0 49.94 49.94;" xml:space="preserve"><path
+     d="M48.856,22.731c0.983-0.958,1.33-2.364,0.906-3.671c-0.425-1.307-1.532-2.24-2.892-2.438l-12.092-1.757   c-0.515-0.075-0.96-0.398-1.19-0.865L28.182,3.043c-0.607-1.231-1.839-1.996-3.212-1.996c-1.372,0-2.604,0.765-3.211,1.996   L16.352,14c-0.23,0.467-0.676,0.79-1.191,0.865L3.069,16.623C1.71,16.82,0.603,17.753,0.178,19.06   c-0.424,1.307-0.077,2.713,0.906,3.671l8.749,8.528c0.373,0.364,0.544,0.888,0.456,1.4L8.224,44.702   c-0.232,1.353,0.313,2.694,1.424,3.502c1.11,0.809,2.555,0.914,3.772,0.273l10.814-5.686c0.461-0.242,1.011-0.242,1.472,0   l10.815,5.686c0.528,0.278,1.1,0.415,1.669,0.415c0.739,0,1.475-0.231,2.103-0.688c1.111-0.808,1.656-2.149,1.424-3.502   L39.651,32.66c-0.088-0.513,0.083-1.036,0.456-1.4L48.856,22.731z M37.681,32.998l2.065,12.042c0.104,0.606-0.131,1.185-0.629,1.547   c-0.499,0.361-1.12,0.405-1.665,0.121l-10.815-5.687c-0.521-0.273-1.095-0.411-1.667-0.411s-1.145,0.138-1.667,0.412l-10.813,5.686   c-0.547,0.284-1.168,0.24-1.666-0.121c-0.498-0.362-0.732-0.94-0.629-1.547l2.065-12.042c0.199-1.162-0.186-2.348-1.03-3.17   L2.48,21.299c-0.441-0.43-0.591-1.036-0.4-1.621c0.19-0.586,0.667-0.988,1.276-1.077l12.091-1.757   c1.167-0.169,2.176-0.901,2.697-1.959l5.407-10.957c0.272-0.552,0.803-0.881,1.418-0.881c0.616,0,1.146,0.329,1.419,0.881   l5.407,10.957c0.521,1.058,1.529,1.79,2.696,1.959l12.092,1.757c0.609,0.089,1.086,0.491,1.276,1.077   c0.19,0.585,0.041,1.191-0.4,1.621l-8.749,8.528C37.866,30.65,37.481,31.835,37.681,32.998z"
+     id="path339" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.21161017"
+     d="m 11.123094,46.602993 c -0.976165,-0.472667 -0.969067,-0.834303 0.141309,-7.199837 1.113937,-6.385944 1.226876,-7.681715 0.749926,-8.604035 -0.165761,-0.320545 -2.4511506,-2.714279 -5.0786442,-5.319408 -3.973523,-3.939702 -4.7772611,-4.836732 -4.7772611,-5.331767 0,-0.608873 0.6364467,-1.437622 1.1109533,-1.446627 0.145482,-0.0028 3.0843881,-0.422075 6.5309025,-0.931809 6.1318805,-0.906895 7.1286505,-1.154993 7.8390135,-1.951147 0.192359,-0.21559 1.652831,-3.010658 3.245494,-6.2112616 1.592663,-3.2006037 2.994112,-5.9383102 3.114332,-6.0837922 0.313302,-0.3791349 1.555989,-0.3263265 1.965854,0.08354 0.191429,0.1914288 1.583115,2.8812468 3.092632,5.9773736 2.871906,5.8904712 3.529664,6.8708842 4.834914,7.2065922 0.411435,0.105821 3.509577,0.584664 6.88476,1.064096 5.740393,0.815401 6.167441,0.905965 6.612817,1.402386 0.261868,0.291881 0.478398,0.739638 0.481176,0.995015 0.0036,0.329725 -1.433745,1.87518 -4.958375,5.331357 -4.149584,4.068994 -5.00469,5.010156 -5.215065,5.739898 -0.223151,0.774057 -0.128974,1.589785 0.831977,7.206325 0.595988,3.483406 1.083614,6.583209 1.083614,6.888452 0,0.716686 -0.954665,1.503975 -1.620941,1.33675 -0.261471,-0.06562 -3.027106,-1.474311 -6.145855,-3.130412 -5.302373,-2.815639 -5.745997,-3.011274 -6.834306,-3.013892 -1.091845,-0.0026 -1.531437,0.19032 -7.104806,3.11845 -3.267523,1.716688 -6.029036,3.114805 -6.136695,3.106928 -0.107659,-0.0079 -0.399136,-0.112805 -0.647726,-0.233175 z"
+     id="path348"
+     inkscape:connector-curvature="0" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.21161017"
+     d="m 11.095875,46.631148 c -0.948832,-0.38119 -0.937479,-0.864121 0.172339,-7.330695 1.122774,-6.542065 1.215658,-7.601714 0.744189,-8.489941 C 11.845584,30.49623 9.5601942,28.097333 6.9337596,25.479626 3.0122012,21.571102 2.1584237,20.615805 2.1584237,20.136471 c 0,-0.536326 0.6287276,-1.430133 1.0059934,-1.430133 0.7171348,0 12.0414079,-1.771662 12.8993309,-2.018076 0.778948,-0.223732 1.255403,-0.517742 1.622067,-1.000941 0.285536,-0.376288 1.766531,-3.199533 3.291098,-6.2738782 1.524567,-3.074345 2.877431,-5.7168269 3.006365,-5.8721821 0.3311,-0.3989531 1.565139,-0.3509693 1.993628,0.077519 0.197991,0.197991 1.62833,2.9469737 3.178531,6.1088505 2.973114,6.0641258 3.3766,6.6445328 4.912756,7.0668888 0.4312,0.118555 3.497901,0.601701 6.814891,1.073657 5.635906,0.801902 6.062072,0.89287 6.507012,1.388958 0.261868,0.291971 0.47793,0.739801 0.480137,0.995178 0.0028,0.328585 -1.445196,1.890293 -4.953354,5.342189 -4.260053,4.191735 -4.991314,5.003935 -5.1987,5.774103 -0.211494,0.785433 -0.109259,1.676784 0.826957,7.20978 0.587557,3.472451 1.068287,6.556862 1.068287,6.854248 0,0.702025 -0.96256,1.487704 -1.620365,1.322606 -0.261157,-0.06555 -2.890682,-1.391051 -5.843392,-2.945567 -5.998713,-3.15815 -6.612968,-3.412686 -7.733065,-3.204446 -0.42886,0.07973 -3.403002,1.51753 -6.609205,3.195114 -3.206202,1.677584 -5.920103,3.044116 -6.03089,3.036737 -0.110786,-0.0074 -0.41707,-0.100045 -0.680631,-0.205928 z"
+     id="path350"
+     inkscape:connector-curvature="0" class="moveableSvg"/>
+</svg></div>
+<div class="moveable svgElement" value='0' id="Heart">
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 51.997 51.997" style="enable-background:new 0 0 51.997 51.997;" xml:space="preserve">
+<path
+       d="M51.911,16.242C51.152,7.888,45.239,1.827,37.839,1.827c-4.93,0-9.444,2.653-11.984,6.905     c-2.517-4.307-6.846-6.906-11.697-6.906c-7.399,0-13.313,6.061-14.071,14.415c-0.06,0.369-0.306,2.311,0.442,5.478     c1.078,4.568,3.568,8.723,7.199,12.013l18.115,16.439l18.426-16.438c3.631-3.291,6.121-7.445,7.199-12.014     C52.216,18.553,51.97,16.611,51.911,16.242z M49.521,21.261c-0.984,4.172-3.265,7.973-6.59,10.985L25.855,47.481L9.072,32.25     c-3.331-3.018-5.611-6.818-6.596-10.99c-0.708-2.997-0.417-4.69-0.416-4.701l0.015-0.101C2.725,9.139,7.806,3.826,14.158,3.826     c4.687,0,8.813,2.88,10.771,7.515l0.921,2.183l0.921-2.183c1.927-4.564,6.271-7.514,11.069-7.514     c6.351,0,11.433,5.313,12.096,12.727C49.938,16.57,50.229,18.264,49.521,21.261z"
+       id="path34" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.22032627"
+     d="M 16.8038,39.126792 C 11.935563,34.681242 7.466398,30.449092 6.8723212,29.722015 2.034267,23.800834 0.89718934,16.933625 3.761383,10.933973 7.3416926,3.4342668 16.346873,1.6404315 22.006067,7.2996253 c 1.206681,1.2066808 1.722122,1.9577415 2.656645,3.8710567 0.637717,1.305644 1.212691,2.320693 1.277718,2.255665 0.06503,-0.06503 0.443433,-0.8661 0.840904,-1.780162 3.583891,-8.2418864 13.236081,-10.2970565 19.111132,-4.0691925 5.355271,5.6768675 5.166107,14.5965695 -0.461907,21.7806955 -0.840704,1.073154 -4.295909,4.324709 -10.253115,9.648801 -4.941806,4.416606 -9.105973,8.069102 -9.253704,8.116657 -0.147731,0.04756 -4.251704,-3.550802 -9.11994,-7.996354 z"
+     id="path45"
+     inkscape:connector-curvature="0" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.22032627"
+     d="M 16.95225,39.289646 C 12.165662,34.931621 7.681839,30.698633 6.9881994,29.88301 5.3214505,27.923146 3.885811,25.353609 3.0206071,22.781737 2.3694541,20.846145 2.3158684,20.464812 2.30851,17.714233 2.3017067,15.171111 2.3751496,14.5162 2.8150199,13.197544 3.5971573,10.85283 4.5801317,9.1713658 6.1323896,7.5228923 9.4899395,3.9572273 14.540436,2.9754085 18.892689,5.0422843 c 2.453977,1.1653883 4.28527,3.1010675 5.810803,6.1420267 l 1.19518,2.38244 0.823255,-1.847592 C 30.43196,3.3929209 39.996,1.3264252 45.892466,7.5769925 c 4.395626,4.6595935 5.116743,11.4222285 1.914997,17.9588235 -1.395606,2.84923 -3.257053,5.133084 -6.644311,8.152072 -1.495577,1.332974 -5.525034,4.927046 -8.954345,7.986828 -3.429312,3.059781 -6.306789,5.557697 -6.39439,5.550926 -0.0876,-0.0068 -4.075578,-3.577969 -8.862167,-7.935996 z"
+     id="path47"
+     inkscape:connector-curvature="0" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.22032627"
+     d="M 16.95225,39.294399 C 12.165662,34.935761 7.7213653,30.751029 7.0760353,29.994993 0.97221467,22.844071 0.56061932,13.426542 6.0954781,7.5593005 8.6720461,4.8280027 12.159629,3.5653157 15.740456,4.0673152 c 3.824579,0.5361713 7.028198,3.0960207 9.026173,7.2123578 l 1.094426,2.254798 1.035939,-2.1514 c 2.322631,-4.8235605 6.076529,-7.3727438 10.87609,-7.3856999 3.365072,-0.00908 5.788925,1.0831049 8.255581,3.7199688 4.256316,4.5500151 4.937186,11.3703981 1.778798,17.8184761 -1.390385,2.838571 -3.245102,5.116782 -6.650489,8.169022 -8.795976,7.883807 -15.203694,13.531913 -15.342544,13.523737 -0.08761,-0.0052 -4.075591,-3.575539 -8.86218,-7.934176 z"
+     id="path49"
+     inkscape:connector-curvature="0" class="moveableSvg"/></svg></div>
+    <div class="moveable svgElement" value='0' id="Cloud">
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+      <!-- <img class="moveableSvg" value='0' src="./images/cloud.svg"/> -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 304.315 304.315" style="enable-background:new 0 0 304.315 304.315;" xml:space="preserve" >
+<path
+     d="M254.831,131.694c-1.738-43.42-37.604-78.212-81.441-78.212c-29.725,0-56.691,16.007-71.026,41.473   c-6.424-3.661-13.722-5.616-21.253-5.616c-22.167,0-40.471,16.86-42.759,38.43C15.213,137.962,0,160.985,0,186.585   c0,16.843,6.47,32.762,18.218,44.824c11.723,12.036,27.419,18.929,44.192,19.408c0.359,0.011,32.254,0.016,94.799,0.016   c80.686,0,88.054-0.01,88.842-0.015v0.001l0.11-0.002c0.037-0.001,0.074-0.001,0.111-0.003c15.617-0.515,30.217-6.984,41.109-18.214   c10.92-11.259,16.934-26.1,16.934-41.789C304.315,161.422,283.092,136.705,254.831,131.694z M245.896,235.821   c-0.023,0-0.046,0-0.069,0c-1.253,0.007-37.631,0.012-88.619,0.012c-44.391,0-92.178-0.004-94.446-0.012   C35.974,235.011,15,213.4,15,186.585c0-20.957,13.298-39.66,33.091-46.542c3.053-1.061,5.082-3.958,5.036-7.19   c-0.002-0.149-0.007-0.297-0.012-0.445l-0.003-0.072c0-15.438,12.561-27.999,28-27.999c7.05,0,13.788,2.634,18.972,7.416   c1.796,1.656,4.286,2.336,6.672,1.817c2.387-0.517,4.373-2.164,5.323-4.414c10.428-24.71,34.494-40.676,61.311-40.676   c36.672,0,66.507,29.836,66.507,66.51c0,0.869-0.024,1.805-0.078,3.036c-0.179,4.099,2.968,7.581,7.065,7.815   c23.794,1.36,42.432,21.113,42.432,44.969C289.315,215.206,270.252,234.953,245.896,235.821z"
+     id="path2" class="moveableSvg"/>
+     <path
+     style="fill:#ffffff;stroke-width:0.67922717"
+     d="m 58.695841,235.15226 c -6.362344,-0.76081 -9.821631,-1.78983 -15.961838,-4.74808 -15.634788,-7.5326 -26.10559,-23.18145 -27.237835,-40.70757 -1.338905,-20.72502 10.808357,-40.14572 30.236455,-48.34121 5.509192,-2.32398 7.529401,-4.49323 7.529401,-8.08486 0,-7.82653 3.577146,-15.79019 9.595533,-21.36215 9.730627,-9.00885 24.282254,-9.51124 35.313711,-1.2192 3.647832,2.74197 4.734012,3.21796 7.216162,3.16234 3.71521,-0.0833 5.66796,-1.84885 8.5783,-7.75611 8.72457,-17.708696 24.0393,-30.106957 43.77812,-35.44124 7.69849,-2.080465 22.65406,-2.09326 30.87071,-0.02641 12.17881,3.063512 22.82856,9.065234 31.21034,17.588764 6.2582,6.364028 9.61849,11.036418 13.10994,18.228976 4.069,8.38238 5.7466,15.2041 6.34734,25.81063 0.68551,12.10309 1.30025,12.89499 11.14875,14.36171 29.7545,4.43126 46.81467,35.7452 34.30046,62.95851 -5.43201,11.81239 -16.21072,20.87215 -29.39928,24.71077 -3.78308,1.10108 -10.82222,1.19357 -98.14833,1.28962 -51.74013,0.0569 -96.059702,-0.13411 -98.487939,-0.42449 z"
+     id="path11"
+     inkscape:connector-curvature="0" class="moveableSvg"/>
+     <path
+     style="fill:#ffffff;stroke-width:0.67922717"
+     d="m 58.695841,235.15226 c -6.378979,-0.7628 -9.832175,-1.79308 -15.961838,-4.76232 -12.707234,-6.15542 -21.095814,-16.19177 -25.55934,-30.57995 -1.255904,-4.0484 -1.572043,-6.63265 -1.575168,-12.87606 -0.0046,-9.20848 1.121272,-14.15019 5.029365,-22.07488 5.077409,-10.29578 12.287606,-17.25128 23.626243,-22.79165 7.393482,-3.61266 9.006921,-5.29731 9.006921,-9.40448 0,-10.47939 7.957907,-22.27968 17.466612,-25.90016 9.237943,-3.51738 18.380254,-2.28886 27.173237,3.65148 8.327417,5.62581 11.138407,4.73083 16.441397,-5.2347 18.97089,-35.650667 62.51874,-47.175471 95.45346,-25.261465 17.58929,11.703512 28.39713,30.481425 29.34188,50.979615 0.57305,12.43338 1.74947,14.27299 9.83231,15.37518 10.74278,1.46492 19.22095,5.63531 26.73801,13.15236 8.31771,8.31772 12.45661,17.46721 13.04445,28.83617 1.11017,21.47105 -12.24431,39.86203 -33.42127,46.02573 -3.78308,1.10108 -10.82222,1.19357 -98.14833,1.28962 -51.74013,0.0569 -96.059702,-0.13411 -98.487939,-0.42449 z"
+     id="path13"
+     inkscape:connector-curvature="0" class="moveableSvg"/>
+   </svg>
+</div>
+      <div class="moveable svgElement" value='0' id="Pentagon">
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+
+   <path
+     d="M59.662,26.042L30.701,0.458c-0.377-0.332-0.94-0.334-1.319-0.004L0.343,25.79c-0.306,0.267-0.42,0.692-0.289,1.076   l11,32.249c0.138,0.405,0.519,0.677,0.946,0.677h35.954c0.427,0,0.806-0.271,0.945-0.674l11.046-32   C60.077,26.735,59.966,26.311,59.662,26.042z M47.241,57.792H12.716L2.163,26.856L30.035,2.538l27.801,24.56L47.241,57.792z"
+     id="path141" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.25423729"
+     d="M 12.640892,57.114407 C 12.543971,56.869703 10.183832,49.981853 7.39614,41.808076 L 2.3276081,26.94666 2.9053295,26.394215 C 4.6406156,24.734849 29.852697,2.8983051 30.033285,2.8983051 c 0.403355,0 27.602552,24.2054079 27.52713,24.4972449 -0.04135,0.15999 -2.386685,7.011013 -5.211864,15.224494 l -5.136687,14.933603 -17.197375,0.0028 c -16.143354,0.0027 -17.208176,-0.02443 -17.373597,-0.442078 z"
+     id="path150"
+     inkscape:connector-curvature="0" class="moveableSvg"/><path
+     style="fill:#800000;stroke-width:0.25423729"
+     d="M 12.632351,57.241525 C 12.56943,57.066737 10.223462,50.180148 7.4190895,41.937994 L 2.3202305,26.95226 3.0287593,26.270099 C 4.8038143,24.561105 29.835364,2.8983051 30.035064,2.8983051 c 0.198102,0 5.04148,4.2374677 22.943975,20.0736689 l 4.729742,4.183838 -1.46215,4.205992 c -0.80418,2.313295 -3.165986,9.153654 -5.248456,15.200794 l -3.786311,10.994799 -17.232554,10e-4 C 16.423069,57.55916 12.722347,57.491557 12.632351,57.241562 Z"
+     id="path152"
+     inkscape:connector-curvature="0" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.25423729"
+     d="M 19.334896,57.370243 C 13.423222,57.303486 12.798053,57.255425 12.644714,56.855929 12.551684,56.613557 10.237822,49.843592 7.5027986,41.811559 3.8901785,31.20226 2.5963283,27.099466 2.7724244,26.811559 3.2150993,26.08781 29.675718,3.1525424 30.068039,3.1525424 c 0.311423,0 27.445947,23.8647966 27.432775,24.1271066 -0.0042,0.08391 -2.338838,6.902554 -5.188055,15.152554 l -5.180392,15 -10.638219,0.0058 c -5.851019,0.0032 -13.572682,-0.0273 -17.159252,-0.0678 z"
+     id="path154"
+     inkscape:connector-curvature="0" class="moveableSvg"/><path
+     style="fill:#ffffff;stroke-width:0.25423729"
+     d="m 14.123695,57.118561 -1.308509,-0.09247 -3.2997575,-9.7122 C 4.7222559,33.206118 2.8074765,27.267507 2.940296,26.921385 3.1236903,26.443467 26.333642,6.18168 29.216581,3.9827549 l 0.834266,-0.6363255 0.826272,0.6347456 c 2.997495,2.3026911 26.377434,23.062089 26.375867,23.419529 -0.0011,0.244204 -7.46644,22.117677 -9.533829,27.934042 l -0.700345,1.970339 -15.793304,-0.04703 C 22.53919,57.23219 14.843375,57.169416 14.123695,57.118561 Z"
+     id="path156"
+     inkscape:connector-curvature="0" class="moveableSvg"/>
+
+</svg></div>
+
+   
+<div class="moveable textbox menuTwoText" value='0' id="Text"><textarea class='txt' name="Text" cols="15" rows="4"></textarea></div>
+
+    <div id="end"></div>
+
+    <!-- Help -->
+    <div id="help">
+      <img class="otherImg tooltip" src="./images/question-mark.png" title="Right click to open the menu. Click an image to select it."\>
+    </div>
+    <!-- Done -->
+    <div id="done">
+      <img class="otherImg" src="./images/correct.png"\>
+    </div>
+  </div>
+
+  
+
+  <script src="./javascript/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="tooltipster/dist/js/tooltipster.bundle.min.js"></script>
+  <script src="./javascript/rxjs.umd.js"></script>
+  <script src="./javascript/marking-menu.js"></script>
+  <script src="./javascript/menus.js"></script>
+  <script src="./javascript/menus2.js"></script>
+  <script src="./javascript/imgs.js"></script>
+  <script src="./javascript/util.js"></script>
+  <script src="./javascript/element_movement.js"></script>
+  <script src="./javascript/script.js"></script>
+</body>
+
+</html>
+
