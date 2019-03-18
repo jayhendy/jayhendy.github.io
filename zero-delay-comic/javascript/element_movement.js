@@ -4,9 +4,6 @@
 
 var ctx = document.createElement("canvas").getContext("2d");
 
-var count;
-
-
 $('.triangle').on("mousedown", function(event) {
   var innerPos = getInnerPosition(event, $(this));
 
@@ -88,12 +85,8 @@ $('.moveablePngFull').on("mousedown", function(event) {
 });
 
 function testAlpha(event, domImg) {
-  domImg.setAttribute('crossOrigin', '');
   var img = $(domImg)
 
-  img.setAttribute('crossOrigin', '');
-
-  console.log(domImg, count);
 
 
   var innerPos = getInnerPosition(event, img.parent());

@@ -4,7 +4,6 @@
 
 var ctx = document.createElement("canvas").getContext("2d");
 
-var count;
 
 
 $('.triangle').on("mousedown", function(event) {
@@ -84,10 +83,8 @@ $('.moveablePngFull').on("mousedown", function(event) {
 });
 
 function testAlpha(event, domImg) {
-   domImg.crossOrigin = "Anonymous";
   var img = $(domImg)
 
-  console.log(domImg, count);
 
 
   var innerPos = getInnerPosition(event, img.parent());
@@ -138,7 +135,7 @@ function checkElements(event) {
 
     
     if(listOfElements[i].classList.contains("moveablePng")) {
-      count = 2;
+
       testAlpha(event, listOfElements[i]);
       break;
 
