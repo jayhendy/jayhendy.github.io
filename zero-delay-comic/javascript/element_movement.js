@@ -31,13 +31,9 @@ $('.svgElement, .svgRectangularElement').on("mousedown", function(event) {
 });
 
 $('.moveablePng').on("mousedown", function(event) {
-  try {
-    testAlpha(event, this);
-  } catch (err) {
-    console.log("error", err);
-  }
-  
-
+ 
+  testAlpha(event, this);
+ 
 });
 
 $('.moveableParentCSS').on("mousedown", function(event) {
@@ -137,11 +133,8 @@ function checkElements(event) {
 
     
     if(listOfElements[i].classList.contains("moveablePng")) {
-      try {
-        testAlpha(event, listOfElements[i]);
-      } catch (err) {
-        console.log("error", err);
-      }
+      testAlpha(event, listOfElements[i]);
+   
       break;
 
     } else if(listOfElements[i].classList.contains("moveableSvg")) {
