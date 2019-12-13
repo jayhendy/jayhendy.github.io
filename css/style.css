@@ -131,6 +131,22 @@ h2 {
     -webkit-transition: background-color 0.5s; /* Safari */
     transition: background-color 0.5s;
 }
+
+.fa-chevron-left {
+  font-size: 20px;
+  background-color: rgba(20, 20, 30, 0.8);
+  color: #FFFFFF;
+
+  /*box-shadow: 1px 1px 1px 1px #CCCCCC;*/
+
+   width: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    -webkit-transition: background-color 0.5s; /* Safari */
+    transition: background-color 0.5s;
+}
+
 .margins {
   padding-left: 40px;
   padding-right: 40px;
