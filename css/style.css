@@ -1,53 +1,74 @@
 * {
-	font-family: 'Abel', sans-serif;
+	 font-family: 'Barlow';
 	
 
 }
 body {
-    background: url("../assets/gut.jpg") no-repeat center center fixed;  
+    /*background: url("../assets/gut.jpg") no-repeat center center fixed;  */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-   background-color: rgba(255, 255, 255, 0.95);
-
+   background-color: rgb(255, 255, 255);
 }
 
 h1 {
-    color: #FFFFFF;
+    color: #000000;
     text-align: center;
-    font-size: 28px;
+    /*font-size: 28px;*/
     /*font-family: 'Shadows Into Light', cursive;*/
 }
 h2 {
-    color: #FFFFFF;
+    color: #000000;
     text-align: center;
-    font-size: 20px;
+    font-weight: bold;
+    /*font-size: 20px;*/
     /*font-family: 'Shadows Into Light', cursive;*/
 }
 
 .p-class {
-    color: #FFFFFF;
-    font-size: 18px;
+    color: #000000;
+    /*font-size: 15px;*/
+/*    margin-right: 10%;
+    margin-left: 10%;*/
 }
 
-.p-for-projects {
-  font-size: 15px;
+.pub-heading {
+  /*font-size: 15px;*/
   /*color: #FFFFFF;*/
-
+  font-weight: bold;
 }
 
 .small-p {
-  font-size: 15px;
-  color: #FFFFFF;
+  /*font-size: 15px;*/
+  color: #000000;
 
 }
+.headshot {
+  /*width: 200px;*/
+  /*padding-left:40px;*/
+  float: left;
+  padding-right: 25px;
+  font-size: 14px;
+  /*margin-bottom: 5px;*/
+}
+
+/*.col-xs-4 {
+   border: 5px solid yellow;
+
+}
+*/
+
+/*.d-md-inline-block {
+     border: 5px solid green;
+
+}*/
 
 .box {
 
 /* 	background-color: rgba(20, 20, 30, 0.8); */
 /* 	opacity: 0.5; */
-	background-color:rgba(20, 20, 30, 0.8);
+	/*background-color:rgba(20, 20, 30, 0.8);*/
 	
 /* 	opacity: 0.5; */
 /* 	background-color:rgba(255, 255, 255, 0.9); */
@@ -55,20 +76,20 @@ h2 {
 	
 	/*margin-top:2%;*/
 
-	padding-left: 10px;
+	padding-left: 20px;
     padding-top: 10px;
-    padding-right: 10px;
+    padding-right: 20px;
     padding-bottom: 20px;
 
-    box-shadow: 1px 1px 1px 1px rgba(0,0,0, 0.4);
-
+    /*box-shadow: 1px 1px 1px 1px rgba(0,0,0, 0.4);*/
+    max-width:830px;
 }
 .margin-class {
   margin-top: 3%;
 }
 .btn-nice {
-	background-color: rgba(20, 20, 30, 0.8);
-	color: #FFFFFF;
+	background-color: rgba(255,255,255);
+	color: #000000;
 /*
 	box-shadow: 1px 1px 1px 1px #CCCCCC;
 */
@@ -77,27 +98,27 @@ h2 {
     padding-right: 15px;
     padding-bottom: 10px;
 
-    -webkit-transition: background-color 0.5s; /* Safari */
-    transition: background-color 0.5s;
+/*    -webkit-transition: color 0.5s;  Safari 
+    transition: color 0.5s;*/
 }
 
 .btn-nice:hover, .btn-nice:active, .btn-nice:focus {
-	color: rgb(20, 20, 30);
-    background-color: #FFFFFF;
-	font-weight: bold;
+	color: rgb(175,175,175);
+    /*background-color: #000000;*/
+	/*font-weight: bold;*/
 	text-decoration: none;
 
 }
 
 .text-font {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Barlow';
 }
 
 /* Style all font awesome icons */
 .fa {
   font-size: 28px;
-  background-color: rgba(20, 20, 30, 0.8);
-  color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #000000;
 
   /*box-shadow: 1px 1px 1px 1px #CCCCCC;*/
 
@@ -105,22 +126,22 @@ h2 {
     padding-top: 10px;
     padding-bottom: 10px;
 
-    -webkit-transition: background-color 0.5s; /* Safari */
-    transition: background-color 0.5s;
+/*    -webkit-transition: background-color 0.5s;  Safari 
+    transition: background-color 0.5s;*/
 }
 
 /* Add a hover effect if you want */
 .fa:hover {
-  color: rgb(20, 20, 30);
+  color: rgb(175 , 175, 175);
   background-color: #FFFFFF;
   text-decoration: none;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .fa-home {
   font-size: 20px;
-  background-color: rgba(20, 20, 30, 0.8);
-  color: #FFFFFF;
+  background-color:#FFFFFF;
+  color: #000000;
 
   /*box-shadow: 1px 1px 1px 1px #CCCCCC;*/
 
@@ -128,41 +149,44 @@ h2 {
     padding-top: 10px;
     padding-bottom: 10px;
 
-    -webkit-transition: background-color 0.5s; /* Safari */
-    transition: background-color 0.5s;
+   /* -webkit-transition: color 0.5s;  Safari 
+    transition: color 0.5s;*/
 }
 
 .fa-chevron-left {
   font-size: 20px;
-  background-color: rgba(20, 20, 30, 0.8);
-  color: #FFFFFF;
+  background-color:#FFFFFF;
+  color: #000000;
 
   /*box-shadow: 1px 1px 1px 1px #CCCCCC;*/
 
    width: 40px;
     padding-top: 10px;
     padding-bottom: 10px;
-
-    -webkit-transition: background-color 0.5s; /* Safari */
-    transition: background-color 0.5s;
+/*
+    -webkit-transition: 0.5s;  Safari 
+    transition: color 0.5s;*/
 }
 
 .margins {
-  padding-left: 40px;
-  padding-right: 40px;
-  text-align:left;
-  text-indent: 30px;
+  /*padding-left: 40px;
+  padding-right: 40px;*/
+  text-align: justify
+  /*left;
+  text-indent: 30px;*/
 }
 
 .margins-xs {
   padding-left: 15px;
   padding-right: 15px;
+    text-align: justify
+/*
   text-align:left;
-  text-indent: 30px;
+  text-indent: 30px;*/
 }
 
 .white-hr {
-  border-color:#FFFFFF; 
+  border-color: #000000; 
   width:80%;
 }
 
@@ -177,26 +201,61 @@ h2 {
   padding-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  color: #FFFFFF;
+  color: #000000;
   text-decoration: none;
-      -webkit-transition: background-color 0.5s; /* Safari */
-    transition: background-color 0.5s;
+/*      -webkit-transition: background-color 0.5s;  Safari 
+    transition: background-color 0.5s;*/
 }
 
-.media-project:hover, .media-project:active, .media-project:focus {
-  background-color: #FFFFFF;
+/*.media-project:hover, .media-project:active, .media-project:focus {
+  background-color: #000000;
   
-  color: rgb(20, 20, 30);
-  text-decoration: none;
-  /*font-weight: bold;*/
+  color: rgb(175, 175, 175);
+  text-decoration: none;*/
+  /*font-weight: bold;
 
+}*/
+.in-text-link {
+   text-decoration: underline;
+  color: rgb(100,100,100);
 }
-a {
-  text-decoration: none;
+.in-text-link:hover {
+  /*text-decoration: none; */
+   text-decoration: underline;
+
+  color: rgb(175, 175, 175);
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration: none; 
+   /*text-decoration: underline;*/
+
+  color: rgb(175, 175, 175);
 }
 
 
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th {
+  height: 20px;
+  vertical-align: top;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.media-body {
+  padding-left: 50px;
+  padding-right: 40px;
+  text-align: justify;
+  /*max-width: 500px;*/
+}
+.ul {
+  text-decoration: underline;
+}
+.bf {
+  font-weight: bold;
+}
