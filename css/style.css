@@ -243,6 +243,7 @@ table {
 th {
   height: 20px;
   vertical-align: top;
+  text-align: left;
   font-weight: normal;
   font-size: 12px;
 }
