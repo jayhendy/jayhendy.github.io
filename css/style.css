@@ -21,7 +21,7 @@ h1 {
 h2 {
     color: #000000;
     text-align: center;
-    font-weight: bold;
+    /*font-weight: bold;*/
     /*font-size: 20px;*/
     /*font-family: 'Shadows Into Light', cursive;*/
 }
@@ -36,7 +36,7 @@ h2 {
 .pub-heading {
   /*font-size: 15px;*/
   /*color: #FFFFFF;*/
-  font-weight: bold;
+  /*font-weight: bold; */
 }
 
 .small-p {
@@ -64,7 +64,7 @@ h2 {
 
 }*/
 .box-header {
-	
+
 /* 	background-color: rgba(20, 20, 30, 0.8); */
 /* 	opacity: 0.5; */
 	/*background-color:rgba(20, 20, 30, 0.8);*/
@@ -277,5 +277,5 @@ th {
   text-decoration: underline;
 }
 .bf {
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
