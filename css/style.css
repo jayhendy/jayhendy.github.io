@@ -2,6 +2,11 @@
 font-family: 'Roboto Condensed', sans-serif;	
 
 }
+img {
+  image-rendering: auto;
+  /*image-rendering: crisp-edges;*/
+  /*image-rendering: pixelated;*/
+}
 body {
     /*background: url("../assets/gut.jpg") no-repeat center center fixed;  */
   -webkit-background-size: cover;
@@ -32,7 +37,11 @@ p {
 /*    margin-right: 10%;
     margin-left: 10%;*/
 }
+.social-links a {
+  font-size: 26px;
+  color: rgb(100,100,100);
 
+}
 .name {
   padding-left: 18px; 
   font-family: 'Pompiere', cursive; 
@@ -103,6 +112,11 @@ p {
     /*box-shadow: 1px 1px 1px 1px rgba(0,0,0, 0.4);*/
     max-width:830px;
 }
+
+.music-credits {
+  font-size: 10.5pt;
+}
+
 .margin-class {
   margin-top: 3%;
 }
@@ -190,6 +204,7 @@ p {
 .margins {
   /*padding-left: 40px;
   padding-right: 40px;*/
+  padding-top:10px;
   text-align: justify
   /*left;
   text-indent: 30px;*/
