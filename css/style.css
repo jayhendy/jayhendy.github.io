@@ -41,9 +41,12 @@ p {
 /*    margin-right: 10%;
     margin-left: 10%;*/
 }
-.social-links a {
-  font-size: 26px;
-  color: rgb(100,100,100);
+.social-icon {
+color: rgb(100,100,100);
+font-size: 26px;
+}
+.social-icon:hover {
+color: rgb(100,160,255);
 
 }
 .name {
