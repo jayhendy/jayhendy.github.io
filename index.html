@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Primary Meta Tags -->
+		<meta name="title" content="Jay Henderson">
+		<meta name="description"
+			content="I am an Assistant Professor at Memorial University of Newfoundland studying HCI.">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500&display=swap" rel="stylesheet">
+		<!-- Academic Icons -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+		<style>
+		@font-face {
+			font-family: sen;
+			src: url(css/fonts/Sen-Regular.ttf);
+		}
+
+		body {
+			font-family: 'Roboto', sans-serif;
+			font-weight: 300;
+			text-underline-offset: 2.5px;
+		
+			color:#525252;
+			font-size: 1rem;
+			background-color: #fbfbfb;
+		
+		}
+		.title_text {
+			font-family: 'Dosis', sans-serif;
+			font-weight: 500;
+			font-size: 2.5rem;
+			line-height: 44pt;
+			color: #222222;
+		}
+		.subtitle_text {
+			padding-top: 30px;
+			padding-bottom: 10px;
+			font-family: 'Dosis', sans-serif;
+			font-weight: 500;
+			font-size: 2rem;
+			color: #222222;
+		}
+		.publication-category {
+			font-family: 'Dosis', sans-serif;
+			font-weight: 300;
+			font-style: italic;
+		}
+		.mainpara {
+			margin-top: 2.5rem;
+			margin-bottom: 1.5rem;
+			font-size: 12pt;
+			color: #525252;
+		}
+
+		a {
+			color: #444;
+			text-decoration: underline dotted;
+			text-decoration-thickness: 1px !important;
+			text-decoration-color: #fbfbfb;
+			transition: 0.15s !important;
+			
+		}
+		.subpara > a {
+			font-weight: 400 !important;
+		}
+		a:hover {
+			text-decoration: underline dotted;
+			text-decoration-color: #111;
+			text-decoration-thickness: 1px !important;
+			color: #000;
+		}
+		.about {
+			line-height: 1.6;
+			padding-left: 1rem;
+			font-size: 12pt;
+		}
+		.header-1 {
+			font-size: 1.6rem;
+			color: #444; 
+		}
+		.thisauthor {
+			font-weight: 400;
+			text-decoration-thickness: 1px !important;
+		}
+		.tagsep {
+			padding: 3px;
+			color: #444;
+			font-size: 0.8rem;
+		}
+		.tagseparticle {
+			padding: 0px;
+			padding-left: 3px;
+			padding-right: 3px;
+			font-size: 0.8rem;
+			color: #444;
+		}
+		.article {
+			text-decoration:underline;
+			text-decoration-thickness: 1px !important;
+			font-size: 12pt;
+			color: #909090;
+		}
+
+		.authors {
+			font-size: 12pt;
+		}
+
+		.award {
+			font-size: 0.8rem;
+			font-weight: 600;
+			color: #000;
+		}
+
+		.award .award-icon {
+			color: #c2185b;
+		}
+		
+		.headtagsep {
+			padding: 1px;
+		}
+		.tag {
+			padding-right:2px;
+			font-weight: 400;
+			font-size: 0.9rem;
+			color: #727272;
+		}
+
+
+		.tagspan {
+			text-align: right;
+		}
+		
+		.confshort {
+			font-weight: 300;
+		}
+
+		.conf {
+			display: inline-block;
+			padding-bottom: 4px;
+			color:  #505050;
+			font-size: 12pt;
+		}
+
+		.article {
+			font-family: 'Roboto', sans-serif;
+		}
+		.extra-bold {
+			font-weight: 500;
+		}
+		.slightly-bold {
+			font-weight: 400;
+		}
+
+		.papertitle {
+			font-weight: 500;
+			font-size: 12pt;
+			padding-bottom: 3px;
+		}
+		.menulink {
+			color: #5b5e6d;
+			font-size: 2rem;
+			padding: 2px;
+
+		}
+		.menulink:hover{
+			color: #AAA;
+			transition: 0.2s;
+		}
+		.menulink:hover .headtag {
+			color: #AAA;
+			transition: 0.2s;
+		}
+		.headtag {
+			font-size: 2rem;
+		}
+		.profilepic {
+			width:180px;
+			margin-right: 0.5rem;
+			margin-left: 0.5rem;
+		}
+		.more-link {
+			color: #999;
+			font-size: 0.9rem;
+		}
+		
+		[aria-expanded="false"] > .expanded,
+		[aria-expanded="true"] > .collapsed {
+			display: none;
+		}
+
+		.paperlink {
+			font-size: 1rem;
+			font-family: 'Ubuntu Mono', monospace;
+		}
+
+		.allstuff {
+			padding-top: 40px !important;
+		}
+		.allstuffp {
+			padding-top: 0px !important;
+		}
+
+		@media (min-width: 768px) {
+			.fixed-posi {
+				position:fixed;
+			}
+		}
+		@media only screen and (max-width: 768px) {
+			.allstuff {
+				padding-top:0px !important;
+			}
+			.allstuffp {
+				padding-top:0px !important;
+			}
+			.menur {
+				padding-top:18px !important;
+			}
+			.paper {
+				border-left: 1px solid #ddd;
+			}
+			.about {
+				padding-left: 1rem;
+				font-size: 1rem;
+			}
+		}
+		@media only screen and (max-width: 1000px) {
+			.tagspan {
+				display: none;
+			}
+		}
+		@media only screen and (max-width: 575px) {
+			.profilepic {
+				display: none;
+			}
+			.title-and-links{
+				text-align: center;
+			}
+
+		}
+	</style>
+		<title>Jay Henderson</title>
+	</head>
+	<body>
+		<div class="container pt-4 allstuffp">
+			<div class="row pt-5 allstuff">
+				<div class="col-lg-9 mx-auto pt-5 about text-justify">
+
+					<div class="row teaser align-items-end"> 
+						<div class = "col-sm-6 title-and-links">
+
+							<div class="title_text">
+								<div>Jay Henderson</div>
+							</div>
+							
+							<div class="minor_text" style="padding-top: 2px;">
+								<div>(he/any)</div>
+								<div>Assistant Professor, MUN</div>
+								<div>jayhend [at] mun.ca</div>
+								<div style="padding-top: 5px"></div>
+									
+									<a class="menulink" target="_blank" href="assets/jh_cv.pdf"><i class="ai ai-cv-square ai-1x headtag"></i></a>
+									<span class="headtagsep"></span>
+									
+									<a class="menulink" target="_blank" href="https://www.linkedin.com/in/sebastinsanty/"><i class="fab fa-linkedin fa-1x headtag"></i></a>
+									<span class="headtagsep"></span>
+									
+									<a class="menulink" target="_blank" href="https://scholar.google.com/citations?user=HsyMg08AAAAJ"><i class="ai ai-google-scholar-square ai-1x headtag"></i></a>
+									<span class="headtagsep"></span>
+									
+									<a class="menulink" target="_blank" href="https://dl.acm.org/profile/99659176995"><i class="ai ai-acmdl-square ai-1x headtag"></i></a>
+									<span class="headtagsep"></span>
+
+							</div>
+
+						</div>
+
+						<div class="col-sm-6 text-right">
+							<img src="assets/jayh.jpg" class="profilepic float-right img-fluid rounded">
+						</div>
+
+					</div>
+
+					<div class="mainpara">
+						<p class="subpara">
+							I am an Assistant Professor in the Department of Computer Science at <a class="paralink" href="https://www.mun.ca/" target="_blank">Memorial University of Newfoundland</a> where I work on understanding fundamental user input paradigms and gestural interactions. Before joining MUN, I completed my PhD in the <a class="paralink" href="http://hci.cs.uwaterloo.ca/" target="_blank">Human-Computer Interaction (HCI) Lab</a> at the <a class="paralink" href="https://uwaterloo.ca/" target="_blank">University of Waterloo</a>, advised by Prof. Edward Lank. This was followed by a stint in industry as a Senior Research Scientist at Huawei Canada and a postdoc at <a class="paralink" href="https://carleton.ca/" target="_blank">Carleton University</a>. My research interests span a variety of domains within human-computer interaction, including, learning input techniques, extended reality (AR/VR/MR), and 2D/3D interaction – with the overarching goal of understanding human behaviour while interacting with emerging technology.
+						</p>
+						<p class="subpara" >
+							<center>
+								<span class="extra-bold">Prospective Students</span>: I am recruiting graduate students to work on interaction techniques in extended reality (VR/AR/MR). Send me an email if you're interested!
+							</center>
+						</p>
+					</div>
+				
+				<div id="announcements" class="subtitle_text">Announcements</div>
+
+					<div id="chi2023" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="extra-bold">Oct 2023:</span> I am starting an Assistant Professorship at Memorial University of Newfoundland!
+							</div>
+						</div>
+					</div>
+
+
+
+				<div id="papers" class="subtitle_text">Recent Publications</div>
+				
+					
+					<div id="chi2023" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="papertitle">In-vehicle Performance and Distraction for Midair and Touch Directional Gestures.</span><br>
+								<div class="d-flex">
+									<span class="authors">
+										Arman Hafizi, <span class="thisauthor">Jay Henderson</span>, Ali Neshati, Wei Zhou, Edward Lank, Daniel Vogel
+									</span>
+									
+								</div>
+
+								<div class="d-flex">
+									<span class="conf">
+										CHI 2023
+										<br>
+										<b><a href="https://doi.org/10.1145/3544548.3581335" target="_blank">DOI</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://dl.acm.org/doi/pdf/10.1145/3544548.3581335" target="_blank">PDF</a></b>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="chi2023ea" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="papertitle">Interaction Region Characteristics for Midair Barehand Targeting on a Television.</span><br>
+								<div class="d-flex">
+									<span class="authors">
+										<span class="thisauthor">Jay Henderson</span>, Ali Neshati, Sachi Mizobuchi, Wei Zhou, Daniel Vogel, Edward Lank
+									</span>
+								</div>
+								<div class="d-flex">
+									<span class="conf">
+										CHI EA 2023
+										<br>
+										<b><a href="https://doi.org/10.1145/3544549.3585877" target="_blank">DOI</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://dl.acm.org/doi/pdf/10.1145/3544549.3585877" target="_blank">PDF</a></b>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="imwut2022" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="papertitle">Investigating Cross-Modal Approaches for Evaluating Error Acceptability of a Recognition-Based Input Technique.</span><br>
+								<div class="d-flex">
+									<span class="authors">
+										<span class="thisauthor">Jay Henderson</span>, Tanya Jonker, Edward Lank, Daniel Wigdor, Ben Lafreniere
+									</span>
+								</div>
+								<div class="d-flex">
+									<span class="conf">
+										IMWUT 2022
+										<br>
+										<b><a href="https://doi.org/10.1145/3517262" target="_blank">DOI</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://dl.acm.org/doi/pdf/10.1145/3517262" target="_blank">PDF</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://www.youtube.com/watch?v=JGi9HqP6qT8" target="_blank">TALK</a></b>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="mobhci2020" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="papertitle">STAT: Subtle Typing Around the Thigh for Head-Mounted Displays.</span><br>
+								<div class="d-flex">
+									<span class="authors">
+										<span class="thisauthor">Jay Henderson</span>, Jessy Ceha, Edward Lank
+									</span>
+								</div>
+								<div class="d-flex">
+									<span class="conf">
+										MobileHCI 2020
+										<br>
+										<b><a href="https://doi.org/10.1145/3379503.3403549" target="_blank">DOI</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://dl.acm.org/doi/pdf/10.1145/3379503.3403549" target="_blank">PDF</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://www.youtube.com/watch?v=LeX5ByoYaFk" target="_blank">TALK</a></b>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="chi2020" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="papertitle">Investigating the Necessity of Delay in Marking Menu Invocation.</span><br>
+								<div class="d-flex">
+									<span class="authors">
+										<span class="thisauthor">Jay Henderson</span>, Sylvain Malacria, Mathieu Nancel, Edward Lank
+									</span>
+								</div>
+								<div class="d-flex">
+									<span class="conf">
+										CHI 2020
+										<br>
+										<b><a href="https://doi.org/10.1145/3313831.3376296" target="_blank">DOI</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://dl.acm.org/doi/pdf/10.1145/3313831.3376296" target="_blank">PDF</a></b>
+										&nbsp; // &nbsp;
+										<b><a href="https://www.youtube.com/watch?v=MDyfdOJwvr4" target="_blank">TALK</a></b>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="teaching" class="subtitle_text">Teaching</div>
+				
+					
+					<div id="comp4303" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="papertitle">COMP 4303: Artificial Intelligence for Games.</span><br>
+								<div class="d-flex">
+									Winter 2024, MUN
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="itec4011" class="row">
+						<div class="col-lg-12">
+							<div class="talk my-2 pl-2">
+								<span class="papertitle">ITEC 4011: Artificial Intelligence for Digital Media.</span><br>
+								<div class="d-flex">
+									Winter 2023, Carleton
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row justify-content-center pt-5 pb-3" style="font-size: 0.9rem; margin-bottom: 60px">
+						<div>
+						Jay Henderson &nbsp; - &nbsp; 2023
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	</body>
+	
+
+</html>
