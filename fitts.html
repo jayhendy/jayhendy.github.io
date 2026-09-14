@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitts' law demo</title>
+<style>
+  :root{
+    --paper:#fbfcfd;
+    --grid:#dbe2ea;
+    --grid-strong:#c3ccd8;
+    --ink:#1a2230;
+    --muted:#5d6a7d;
+    --faint:#94a3b8;
+    --signal:#e63946;   /* the target to hit / regression line */
+    --signal-dim:#f3b7bc;
+    --data:#0e7c86;     /* measured data */
+    --data-fill:#0e7c86;
+    --panel:#ffffff;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .flash{ transition: background-color .12s, box-shadow .12s, border-color .12s; }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; min-height:100%;
+  }
+  .mono{ font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+
+  header{
+    padding:18px clamp(16px,3vw,34px) 12px;
+    border-bottom:1px solid var(--grid);
+    display:flex; flex-wrap:wrap; align-items:flex-end; gap:6px 24px;
+  }
+  header h1{ font-size: clamp(20px,2.4vw,30px); margin:0; letter-spacing:-0.01em; font-weight:650; }
+  header .sub{ color:var(--muted); font-size: clamp(13px,1.4vw,15px); max-width:60ch; line-height:1.4; margin:0; }
+  .eqn{
+    margin-left:auto; text-align:right; line-height:1.35; white-space:nowrap;
+  }
+  .eqn .big{ font-size: clamp(15px,1.7vw,20px); }
+  .eqn .lab{ color:var(--muted); font-size:12px; }
+  .eqn b{ color:var(--signal); font-weight:650; }
+
+  .toolbar{
+    display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center;
+    padding:12px clamp(16px,3vw,34px);
+    border-bottom:1px solid var(--grid);
+  }
+  button{
+    font:inherit; font-size:14px; cursor:pointer;
+    border:1px solid var(--grid-strong); background:var(--panel); color:var(--ink);
+    padding:8px 15px; border-radius:8px;
+  }
+  button:hover{ border-color:var(--faint); }
+  button:focus-visible{ outline:3px solid var(--signal); outline-offset:2px; }
+  button.primary{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  button.primary:hover{ background:#000; }
+  button:disabled{ opacity:.45; cursor:default; }
+  .field{ display:flex; align-items:center; gap:7px; color:var(--muted); font-size:13px; }
+  .field input{ width:58px; font:inherit; padding:5px 7px; border:1px solid var(--grid-strong); border-radius:6px; }
+  .spacer{ flex:1 1 auto; }
+  .status{ color:var(--muted); font-size:13px; }
+  .status b{ color:var(--ink); }
+
+  main{
+    flex:1 1 auto; display:grid; gap:0;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px){
+    main{ grid-template-columns: minmax(0,1.45fr) minmax(340px,1fr); }
+  }
+
+  /* ---- Arena ---- */
+  #arena-wrap{
+    position:relative; padding:16px clamp(12px,2vw,24px);
+    display:flex; flex-direction:column; min-height:340px;
+  }
+  #cond{
+    display:flex; gap:8px 20px; flex-wrap:wrap; align-items:baseline;
+    color:var(--muted); font-size:13px; margin-bottom:10px;
+  }
+  #cond .v{ color:var(--ink); }
+  #cond .id{ color:var(--signal); font-weight:650; }
+  #arena{
+    position:relative; flex:1 1 auto; border-radius:12px;
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 32px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/32px 100%,
+      var(--panel);
+    border:1px solid var(--grid-strong);
+    overflow:hidden; touch-action:none; user-select:none;
+  }
+  .target{
+    position:absolute; top:12%; height:76%;
+    border-radius:8px; border:2px solid var(--faint);
+    background:transparent;
+  }
+  .target.active{
+    background:var(--signal); border-color:var(--signal);
+    box-shadow:0 0 0 4px var(--signal-dim);
+  }
+  .target.active.flash{ background:#ff5964; }
+  #arena.err{ box-shadow: inset 0 0 0 3px var(--signal); }
+  #overlay{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:24px; color:var(--muted); font-size:15px; line-height:1.5;
+    pointer-events:none;
+  }
+  #overlay.hidden{ display:none; }
+  #overlay kbd{
+    font-family:inherit; background:var(--paper); border:1px solid var(--grid-strong);
+    border-bottom-width:2px; border-radius:5px; padding:1px 6px; color:var(--ink); font-size:13px;
+  }
+
+  /* ---- Plot ---- */
+  #plot-wrap{
+    border-top:1px solid var(--grid);
+    padding:16px clamp(12px,2vw,24px);
+    display:flex; flex-direction:column; min-height:340px;
+  }
+  @media (min-width:960px){ #plot-wrap{ border-top:none; border-left:1px solid var(--grid); } }
+  #plot-wrap h2{ font-size:15px; margin:0 0 4px; font-weight:600; }
+  #plot-wrap .cap{ color:var(--muted); font-size:12.5px; margin:0 0 10px; line-height:1.4; }
+  canvas{ width:100%; flex:1 1 auto; min-height:240px; }
+  .readouts{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px;
+  }
+  .ro{ border:1px solid var(--grid); border-radius:9px; padding:9px 11px; background:var(--panel); }
+  .ro .k{ color:var(--muted); font-size:11.5px; margin-bottom:3px; }
+  .ro .val{ font-size:19px; }
+  .ro .val small{ color:var(--muted); font-size:12px; font-weight:400; }
+  .ro.hl{ border-color:var(--signal-dim); }
+  .ro.hl .val{ color:var(--signal); }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Fitts' law</h1>
+    <p class="sub">Tap the highlighted target, then the other one, back and forth. Each round changes how far apart and how wide the targets are. Movement time is timed and plotted against difficulty as you go.</p>
+  </div>
+  <div class="eqn mono">
+    <div class="big">MT = <b id="eq-a">–</b> + <b id="eq-b">–</b>·ID</div>
+    <div class="lab">ID = log₂(A/W + 1) &nbsp;·&nbsp; fit R² = <span id="eq-r">–</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button id="startBtn" class="primary">Start</button>
+  <button id="resetBtn">Reset</button>
+  <div class="field">Reps / round
+    <input id="reps" type="number" min="3" max="30" value="8" class="mono">
+  </div>
+  <div class="spacer"></div>
+  <div class="status" id="status">Ready. Press Start or the spacebar.</div>
+  <button id="exportBtn" disabled>Export CSV</button>
+</div>
+
+<main>
+  <section id="arena-wrap">
+    <div id="cond">
+      <span>Round <span class="v mono" id="c-block">–/–</span></span>
+      <span>Distance A = <span class="v mono" id="c-a">–</span> px</span>
+      <span>Width W = <span class="v mono" id="c-w">–</span> px</span>
+      <span>Difficulty ID = <span class="id mono" id="c-id">–</span> bits</span>
+      <span>Errors <span class="v mono" id="c-err">0</span></span>
+    </div>
+    <div id="arena" class="flash">
+      <div class="target" id="tLeft"></div>
+      <div class="target" id="tRight"></div>
+      <div id="overlay">
+        <div>Press <kbd>Start</kbd> (or <kbd>space</kbd>).<br>
+        Then click the red bar, then the other, alternating as fast <em>and</em> as accurately as you can.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="plot-wrap">
+    <h2>Movement time vs. difficulty</h2>
+    <p class="cap">Faint teal = individual taps. Filled dots = the mean for each round. The red line is the least-squares fit through the round means.</p>
+    <canvas id="plot"></canvas>
+    <div class="readouts mono">
+      <div class="ro"><div class="k">Intercept a</div><div class="val" id="ro-a">–<small> ms</small></div></div>
+      <div class="ro"><div class="k">Slope b</div><div class="val" id="ro-b">–<small> ms/bit</small></div></div>
+      <div class="ro hl"><div class="k">Fit R²</div><div class="val" id="ro-r">–</div></div>
+      <div class="ro"><div class="k">Throughput</div><div class="val" id="ro-tp">–<small> bits/s</small></div></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  // ---- Conditions: {A, W} in px. Chosen for a wide, even ID spread. ----
+  const CONDITIONS = [
+    {A:250, W:110},
+    {A:520, W:110},
+    {A:520, W:44},
+    {A:720, W:44},
+    {A:720, W:20},
+    {A:720, W:11},
+  ];
+  const ID = (A,W) => Math.log2(A/W + 1);
+
+  // ---- State ----
+  let repsPerBlock = 8;
+  let order = [];          // shuffled indices into CONDITIONS
+  let blockPos = 0;        // which position in order
+  let rep = 0;             // reps completed in current block
+  let activeSide = "left";
+  let lastHitT = null;     // performance.now() of previous good hit
+  let running = false;
+  let trials = [];         // {block, A, W, id, mt, }
+  let errorsByBlock = {};  // blockIdx -> count
+
+  const el = id => document.getElementById(id);
+  const arena = el("arena"), tLeft = el("tLeft"), tRight = el("tRight");
+  const overlay = el("overlay");
+
+  function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=(Math.random()*(i+1))|0; [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+  function currentCond(){
+    if (!order.length) order = shuffle(CONDITIONS.map((_,i)=>i));
+    return CONDITIONS[order[blockPos]] || CONDITIONS[0];
+  }
+
+  // Half the center-to-center distance actually used on screen, after
+  // clamping the requested amplitude to fit the arena. Single source of
+  // truth so the rendered bars, the readout, the plot and the CSV agree.
+  function clampedHalf(c, arenaWidth){
+    const maxHalf = (arenaWidth - c.W)/2 - 8;
+    return Math.min(c.A/2, Math.max(20, maxHalf));
+  }
+  // Effective (rendered) amplitude for the current condition, in px.
+  function effA(){
+    const c = currentCond();
+    const w = arena.getBoundingClientRect().width;
+    if (!w) return c.A;                 // not laid out yet (e.g. at load)
+    return 2 * clampedHalf(c, w);
+  }
+
+  function layoutTargets(){
+    const c = currentCond();
+    const rect = arena.getBoundingClientRect();
+    const cx = rect.width/2;
+    const h = clampedHalf(c, rect.width);
+    for (const [t, sign] of [[tLeft,-1],[tRight,+1]]){
+      t.style.width = c.W + "px";
+      t.style.left = (cx + sign*h - c.W/2) + "px";
+    }
+    updateCondReadout();
+  }
+
+  function updateCondReadout(){
+    const c = currentCond();
+    const A = effA();
+    const clamped = Math.round(A) < c.A;
+    el("c-block").textContent = (blockPos+1) + "/" + order.length;
+    el("c-a").textContent = clamped ? Math.round(A) + " (req " + c.A + ")" : Math.round(A);
+    el("c-w").textContent = c.W;
+    el("c-id").textContent = ID(A,c.W).toFixed(2);
+    el("c-err").textContent = errorsByBlock[order[blockPos]] || 0;
+  }
+
+  function setActive(side){
+    activeSide = side;
+    tLeft.classList.toggle("active", side==="left");
+    tRight.classList.toggle("active", side==="right");
+  }
+
+  function start(){
+    if (running) return;
+    repsPerBlock = Math.max(3, Math.min(30, parseInt(el("reps").value)||8));
+    // fresh run only if nothing recorded yet; otherwise resume
+    if (trials.length === 0 && blockPos === 0 && rep === 0){
+      order = shuffle(CONDITIONS.map((_,i)=>i));
+      errorsByBlock = {};
+    }
+    running = true;
+    overlay.classList.add("hidden");
+    layoutTargets();
+    lastHitT = null;                 // first hit of a block isn't timed
+    setActive(Math.random()<0.5 ? "left":"right");
+    el("startBtn").textContent = "Pause";
+    el("exportBtn").disabled = trials.length===0;
+    el("status").innerHTML = "Running — tap the <b>red</b> bar, then alternate.";
+  }
+
+  function pause(){
+    running = false;
+    el("startBtn").textContent = trials.length ? "Resume" : "Start";
+    el("status").innerHTML = "Paused. <b>"+trials.length+"</b> taps recorded.";
+    lastHitT = null; // don't time across a pause
+  }
+
+  function reset(){
+    running = false;
+    trials = []; blockPos = 0; rep = 0; lastHitT = null; errorsByBlock = {};
+    order = shuffle(CONDITIONS.map((_,i)=>i));
+    tLeft.classList.remove("active"); tRight.classList.remove("active");
+    overlay.classList.remove("hidden");
+    el("startBtn").textContent = "Start";
+    el("status").textContent = "Ready. Press Start or the spacebar.";
+    el("exportBtn").disabled = true;
+    updateCondReadout();
+    draw();
+  }
+
+  function nextBlock(){
+    blockPos++;
+    rep = 0;
+    lastHitT = null;
+    if (blockPos >= order.length){
+      finish();
+      return false;
+    }
+    layoutTargets();
+    setActive(Math.random()<0.5 ? "left":"right");
+    return true;
+  }
+
+  function finish(){
+    running = false;
+    setActive(null);
+    tLeft.classList.remove("active"); tRight.classList.remove("active");
+    el("startBtn").textContent = "Run again";
+    // reset counters so "Run again" starts clean but keeps the plotted data
+    blockPos = 0; rep = 0; lastHitT = null;
+    order = shuffle(CONDITIONS.map((_,i)=>i));
+    el("status").innerHTML = "Done — <b>"+trials.length+"</b> taps across all rounds. Data stays on the plot.";
+    overlay.classList.remove("hidden");
+    overlay.firstElementChild.innerHTML = "All rounds complete. The fit is on the right.<br>Press <kbd>Run again</kbd> to add more data, or <kbd>Reset</kbd> to clear.";
+    updateCondReadout();
+    draw();
+  }
+
+  function goodHit(){
+    const now = performance.now();
+    const c = currentCond();
+    if (lastHitT !== null){
+      const mt = now - lastHitT;
+      const A = effA();               // actual rendered distance, not nominal
+      trials.push({ block: order[blockPos], Anom:c.A, A:A, W:c.W, id: ID(A,c.W), mt });
+      rep++;
+      el("exportBtn").disabled = false;
+      draw();
+      if (rep >= repsPerBlock){
+        if (!nextBlock()) return;
+        return; // block advanced; wait for next tap (untimed)
+      }
+    }
+    lastHitT = now;
+    setActive(activeSide === "left" ? "right" : "left");
+  }
+
+  function registerError(){
+    const b = order[blockPos];
+    errorsByBlock[b] = (errorsByBlock[b]||0) + 1;
+    el("c-err").textContent = errorsByBlock[b];
+    lastHitT = null; // discard the contaminated interval
+    arena.classList.add("err");
+    const at = activeSide==="left" ? tLeft : tRight;
+    at.classList.add("flash");
+    setTimeout(()=>{ arena.classList.remove("err"); at.classList.remove("flash"); }, 130);
+  }
+
+  // pointer handling
+  arena.addEventListener("pointerdown", (e) => {
+    if (!running) return;
+    const activeEl = activeSide==="left" ? tLeft : tRight;
+    if (e.target === activeEl){
+      goodHit();
+    } else {
+      registerError();
+    }
+  });
+
+  // ---- Regression + plot ----
+  function blockMeans(){
+    const by = new Map();
+    for (const t of trials){
+      if (!by.has(t.block)) by.set(t.block, {id:t.id, sum:0, n:0});
+      const o = by.get(t.block); o.sum += t.mt; o.n++;
+    }
+    return [...by.values()].map(o => ({id:o.id, mt:o.sum/o.n, n:o.n})).sort((a,b)=>a.id-b.id);
+  }
+
+  function fit(points){
+    const n = points.length;
+    if (n < 2) return null;
+    let sx=0,sy=0,sxx=0,sxy=0,syy=0;
+    for (const p of points){ sx+=p.id; sy+=p.mt; sxx+=p.id*p.id; sxy+=p.id*p.mt; syy+=p.mt*p.mt; }
+    const d = n*sxx - sx*sx;
+    if (Math.abs(d) < 1e-9) return null;
+    const b = (n*sxy - sx*sy)/d;
+    const a = (sy - b*sx)/n;
+    const ssTot = syy - sy*sy/n;
+    let ssRes = 0;
+    for (const p of points){ const e = p.mt - (a+b*p.id); ssRes += e*e; }
+    const r2 = ssTot>1e-9 ? 1 - ssRes/ssTot : 1;
+    return {a,b,r2};
+  }
+
+  const canvas = el("plot"), ctx = canvas.getContext("2d");
+  function sizeCanvas(){
+    const dpr = window.devicePixelRatio || 1;
+    const r = canvas.getBoundingClientRect();
+    canvas.width = Math.max(1, r.width*dpr);
+    canvas.height = Math.max(1, r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    return r;
+  }
+
+  function draw(){
+    const r = sizeCanvas();
+    const W = r.width, H = r.height;
+    ctx.clearRect(0,0,W,H);
+    const m = {l:52, r:14, t:12, b:38};
+    const px0 = m.l, px1 = W-m.r, py0 = H-m.b, py1 = m.t;
+
+    const means = blockMeans();
+    // axis ranges
+    const idMax = Math.max(6.5, ...CONDITIONS.map(c=>ID(c.A,c.W))) + 0.3;
+    const idMin = 1.0;
+    let mtMax = 900;
+    for (const t of trials) mtMax = Math.max(mtMax, t.mt);
+    mtMax = Math.ceil(mtMax/200)*200;
+
+    const X = id => px0 + (id-idMin)/(idMax-idMin)*(px1-px0);
+    const Y = mt => py0 - (mt-0)/(mtMax-0)*(py0-py1);
+
+    // grid + axes
+    ctx.strokeStyle = "#dbe2ea"; ctx.fillStyle = "#5d6a7d";
+    ctx.lineWidth = 1;
+    ctx.font = "12px ui-monospace, Menlo, monospace";
+    ctx.textAlign="right"; ctx.textBaseline="middle";
+    for (let mt=0; mt<=mtMax; mt+=200){
+      const y=Y(mt);
+      ctx.beginPath(); ctx.moveTo(px0,y); ctx.lineTo(px1,y); ctx.stroke();
+      ctx.fillText(mt, px0-8, y);
+    }
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    for (let id=1; id<=Math.floor(idMax); id++){
+      const x=X(id);
+      ctx.strokeStyle="#eef2f6";
+      ctx.beginPath(); ctx.moveTo(x,py1); ctx.lineTo(x,py0); ctx.stroke();
+      ctx.fillStyle="#5d6a7d"; ctx.fillText(id, x, py0+8);
+    }
+    // axis frame
+    ctx.strokeStyle="#1a2230"; ctx.lineWidth=1.4;
+    ctx.beginPath(); ctx.moveTo(px0,py1); ctx.lineTo(px0,py0); ctx.lineTo(px1,py0); ctx.stroke();
+    // axis titles
+    ctx.fillStyle="#1a2230"; ctx.font="12.5px system-ui, sans-serif";
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    ctx.fillText("Index of difficulty (bits)", (px0+px1)/2, py0+20);
+    ctx.save();
+    ctx.translate(14,(py0+py1)/2); ctx.rotate(-Math.PI/2);
+    ctx.textBaseline="bottom"; ctx.fillText("Movement time (ms)", 0, 0);
+    ctx.restore();
+
+    // individual taps (faint)
+    ctx.fillStyle="rgba(14,124,134,0.28)";
+    for (const t of trials){
+      ctx.beginPath(); ctx.arc(X(t.id), Y(t.mt), 3, 0, 7); ctx.fill();
+    }
+
+    // regression through means
+    const f = fit(means);
+    if (f){
+      ctx.strokeStyle="#e63946"; ctx.lineWidth=2.2;
+      ctx.beginPath();
+      ctx.moveTo(X(idMin), Y(f.a + f.b*idMin));
+      ctx.lineTo(X(idMax), Y(f.a + f.b*idMax));
+      ctx.stroke();
+    }
+    // means (bold)
+    ctx.fillStyle="#0e7c86";
+    for (const p of means){
+      ctx.beginPath(); ctx.arc(X(p.id), Y(p.mt), 6, 0, 7); ctx.fill();
+      ctx.strokeStyle="#fff"; ctx.lineWidth=1.5; ctx.stroke();
+    }
+
+    // readouts
+    if (f){
+      el("eq-a").textContent = Math.round(f.a);
+      el("eq-b").textContent = Math.round(f.b);
+      el("eq-r").textContent = f.r2.toFixed(3);
+      el("ro-a").innerHTML = Math.round(f.a)+'<small> ms</small>';
+      el("ro-b").innerHTML = Math.round(f.b)+'<small> ms/bit</small>';
+      el("ro-r").textContent = f.r2.toFixed(3);
+      // throughput = mean over taps of ID / MT(seconds)
+      let tp=0; for (const t of trials) tp += t.id/(t.mt/1000);
+      tp = trials.length ? tp/trials.length : 0;
+      el("ro-tp").innerHTML = tp.toFixed(1)+'<small> bits/s</small>';
+    } else {
+      for (const [k,v] of [["eq-a","–"],["eq-b","–"],["eq-r","–"]]) el(k).textContent=v;
+      el("ro-a").innerHTML='–<small> ms</small>'; el("ro-b").innerHTML='–<small> ms/bit</small>';
+      el("ro-r").textContent='–'; el("ro-tp").innerHTML='–<small> bits/s</small>';
+    }
+  }
+
+  function exportCSV(){
+    const rows = [["trial","round_condition","A_requested_px","A_effective_px","W_px","ID_bits","MT_ms"]];
+    trials.forEach((t,i)=> rows.push([i+1, t.block, t.Anom, Math.round(t.A), t.W, t.id.toFixed(4), Math.round(t.mt)]));
+    const csv = rows.map(r=>r.join(",")).join("\n");
+    const blob = new Blob([csv], {type:"text/csv"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "fitts-data.csv"; a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ---- wiring ----
+  el("startBtn").addEventListener("click", ()=> running ? pause() : start());
+  el("resetBtn").addEventListener("click", reset);
+  el("exportBtn").addEventListener("click", exportCSV);
+  window.addEventListener("keydown", (e)=>{
+    if (e.target.tagName === "INPUT") return;
+    if (e.code === "Space"){ e.preventDefault(); running ? pause() : start(); }
+    if (e.key === "r" || e.key === "R") reset();
+  });
+  let rt; window.addEventListener("resize", ()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if(running) layoutTargets(); draw(); }, 80); });
+
+  order = shuffle(CONDITIONS.map((_,i)=>i));  // seed before first readout/draw
+  updateCondReadout();
+  draw();
+})();
+</script>
+</body>
+</html>
