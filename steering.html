@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steering Law — live tunnel task</title>
+<style>
+  :root{
+    --paper:#fbfcfd;
+    --grid:#dbe2ea;
+    --grid-strong:#c3ccd8;
+    --ink:#1a2230;
+    --muted:#5d6a7d;
+    --faint:#94a3b8;
+    --signal:#e63946;   /* finish gate / regression line */
+    --signal-dim:#f3b7bc;
+    --data:#0e7c86;     /* start gate / measured data */
+    --data-dim:#b9dde0;
+    --panel:#ffffff;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .flash{ transition: background-color .12s, box-shadow .12s, border-color .12s; }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; min-height:100%;
+  }
+  .mono{ font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+
+  header{
+    padding:18px clamp(16px,3vw,34px) 12px;
+    border-bottom:1px solid var(--grid);
+    display:flex; flex-wrap:wrap; align-items:flex-end; gap:6px 24px;
+  }
+  header h1{ font-size: clamp(20px,2.4vw,30px); margin:0; letter-spacing:-0.01em; font-weight:650; }
+  header .sub{ color:var(--muted); font-size: clamp(13px,1.4vw,15px); max-width:64ch; line-height:1.4; margin:0; }
+  .eqn{
+    margin-left:auto; text-align:right; line-height:1.35; white-space:nowrap;
+  }
+  .eqn .big{ font-size: clamp(15px,1.7vw,20px); }
+  .eqn .lab{ color:var(--muted); font-size:12px; }
+  .eqn b{ color:var(--signal); font-weight:650; }
+
+  .toolbar{
+    display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center;
+    padding:12px clamp(16px,3vw,34px);
+    border-bottom:1px solid var(--grid);
+  }
+  button{
+    font:inherit; font-size:14px; cursor:pointer;
+    border:1px solid var(--grid-strong); background:var(--panel); color:var(--ink);
+    padding:8px 15px; border-radius:8px;
+  }
+  button:hover{ border-color:var(--faint); }
+  button:focus-visible{ outline:3px solid var(--signal); outline-offset:2px; }
+  button.primary{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  button.primary:hover{ background:#000; }
+  button:disabled{ opacity:.45; cursor:default; }
+  .field{ display:flex; align-items:center; gap:7px; color:var(--muted); font-size:13px; }
+  .field input{ width:58px; font:inherit; padding:5px 7px; border:1px solid var(--grid-strong); border-radius:6px; }
+  .spacer{ flex:1 1 auto; }
+  .status{ color:var(--muted); font-size:13px; }
+  .status b{ color:var(--ink); }
+
+  main{
+    flex:1 1 auto; display:grid; gap:0;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px){
+    main{ grid-template-columns: minmax(0,1.45fr) minmax(340px,1fr); }
+  }
+
+  /* ---- Arena ---- */
+  #arena-wrap{
+    position:relative; padding:16px clamp(12px,2vw,24px);
+    display:flex; flex-direction:column; min-height:340px;
+  }
+  #cond{
+    display:flex; gap:8px 20px; flex-wrap:wrap; align-items:baseline;
+    color:var(--muted); font-size:13px; margin-bottom:10px;
+  }
+  #cond .v{ color:var(--ink); }
+  #cond .id{ color:var(--signal); font-weight:650; }
+  #arena{
+    position:relative; flex:1 1 auto; border-radius:12px;
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 32px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/32px 100%,
+      var(--panel);
+    border:1px solid var(--grid-strong);
+    overflow:hidden; touch-action:none; user-select:none;
+    cursor:crosshair;
+  }
+  #tunnel{
+    position:absolute;
+    border:2px solid var(--data);
+    background:rgba(14,124,134,0.08);
+    border-radius:5px;
+    pointer-events:none;
+  }
+  .gate{
+    position:absolute;
+    border-radius:6px;
+    pointer-events:none;
+  }
+  #startGate{
+    background:var(--data);
+    box-shadow:0 0 0 4px var(--data-dim);
+  }
+  #finishGate{
+    background:var(--signal);
+    box-shadow:0 0 0 4px var(--signal-dim);
+  }
+  .gate::after{
+    position:absolute; inset:0;
+    display:grid; place-items:center;
+    color:#fff; font-size:10px; font-weight:750; letter-spacing:.08em;
+    writing-mode:vertical-rl; text-orientation:mixed;
+  }
+  #startGate::after{ content:"START"; }
+  #finishGate::after{ content:"END"; }
+  #arena.steering #startGate{ box-shadow:0 0 0 2px var(--data-dim); }
+  #arena.err{ box-shadow: inset 0 0 0 3px var(--signal); }
+  #arena.err #tunnel{ border-color:var(--signal); background:rgba(230,57,70,0.08); }
+  #overlay{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:24px; color:var(--muted); font-size:15px; line-height:1.5;
+    pointer-events:none;
+  }
+  #overlay.hidden{ display:none; }
+  #overlay kbd{
+    font-family:inherit; background:var(--paper); border:1px solid var(--grid-strong);
+    border-bottom-width:2px; border-radius:5px; padding:1px 6px; color:var(--ink); font-size:13px;
+  }
+
+  /* ---- Plot ---- */
+  #plot-wrap{
+    border-top:1px solid var(--grid);
+    padding:16px clamp(12px,2vw,24px);
+    display:flex; flex-direction:column; min-height:340px;
+  }
+  @media (min-width:960px){ #plot-wrap{ border-top:none; border-left:1px solid var(--grid); } }
+  #plot-wrap h2{ font-size:15px; margin:0 0 4px; font-weight:600; }
+  #plot-wrap .cap{ color:var(--muted); font-size:12.5px; margin:0 0 10px; line-height:1.4; }
+  canvas{ width:100%; flex:1 1 auto; min-height:240px; }
+  .readouts{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px;
+  }
+  .ro{ border:1px solid var(--grid); border-radius:9px; padding:9px 11px; background:var(--panel); }
+  .ro .k{ color:var(--muted); font-size:11.5px; margin-bottom:3px; }
+  .ro .val{ font-size:19px; }
+  .ro .val small{ color:var(--muted); font-size:12px; font-weight:400; }
+  .ro.hl{ border-color:var(--signal-dim); }
+  .ro.hl .val{ color:var(--signal); }
+  @media (max-width:520px){ .readouts{ grid-template-columns:repeat(2,1fr); } }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Steering Law</h1>
+    <p class="sub">Press and hold on the teal start gate, then steer through the tunnel to the red end gate without touching the sides, then release inside the end gate. Each round changes the tunnel length and width.</p>
+  </div>
+  <div class="eqn mono">
+    <div class="big">MT = <b id="eq-a">–</b> + <b id="eq-b">–</b>·ID</div>
+    <div class="lab">straight, constant-width tunnel: ID = A/W &nbsp;·&nbsp; fit R² = <span id="eq-r">–</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button id="startBtn" class="primary">Start</button>
+  <button id="resetBtn">Reset</button>
+  <div class="field">Reps / round
+    <input id="reps" type="number" min="2" max="20" value="5" class="mono">
+  </div>
+  <div class="spacer"></div>
+  <div class="status" id="status">Ready. Press Start or the spacebar.</div>
+  <button id="exportBtn" disabled>Export CSV</button>
+</div>
+
+<main>
+  <section id="arena-wrap">
+    <div id="cond">
+      <span>Round <span class="v mono" id="c-block">–/–</span></span>
+      <span>Length A = <span class="v mono" id="c-a">–</span> px</span>
+      <span>Width W = <span class="v mono" id="c-w">–</span> px</span>
+      <span>Difficulty ID = <span class="id mono" id="c-id">–</span></span>
+      <span>Errors <span class="v mono" id="c-err">0</span></span>
+    </div>
+    <div id="arena" class="flash">
+      <div id="tunnel"></div>
+      <div class="gate" id="startGate"></div>
+      <div class="gate" id="finishGate"></div>
+    </div>
+  </section>
+
+  <section id="plot-wrap">
+    <h2>Steering time vs. difficulty</h2>
+    <p class="cap">Faint teal = individual traversals. Filled dots = the mean for each round. The red line is the least-squares fit through the round means.</p>
+    <canvas id="plot"></canvas>
+    <div class="readouts mono">
+      <div class="ro"><div class="k">Intercept a</div><div class="val" id="ro-a">–<small> ms</small></div></div>
+      <div class="ro"><div class="k">Slope b</div><div class="val" id="ro-b">–<small> ms/unit</small></div></div>
+      <div class="ro hl"><div class="k">Fit R²</div><div class="val" id="ro-r">–</div></div>
+      <div class="ro"><div class="k">Total errors</div><div class="val" id="ro-err">0</div></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  // Constant-width straight tunnels. For this case, Steering Law difficulty = A / W.
+  const CONDITIONS = [
+    {A:240, W:120},  // ID 2.0
+    {A:420, W:120},  // ID 3.5
+    {A:420, W:70},   // ID 6.0
+    {A:600, W:70},   // ID 8.6
+    {A:600, W:45},   // ID 13.3
+    {A:600, W:30},   // ID 20.0
+  ];
+  const ID = (A,W) => A/W;
+
+  // ---- State ----
+  let repsPerBlock = 5;
+  let order = [];
+  let blockPos = 0;
+  let rep = 0;
+  let running = false;
+  let steering = false;
+  let pointerId = null;
+  let startT = null;
+  let direction = "ltr";
+  let trials = [];         // {block,A,W,id,mt,direction}
+  let errorsByBlock = {};  // condition index -> count
+  let geom = null;
+
+  const el = id => document.getElementById(id);
+  const arena = el("arena"), tunnel = el("tunnel"), startGate = el("startGate"), finishGate = el("finishGate");
+
+  function shuffle(a){
+    a=a.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j=(Math.random()*(i+1))|0;
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function currentCond(){
+    if (!order.length) order = shuffle(CONDITIONS.map((_,i)=>i));
+    return CONDITIONS[order[blockPos]] || CONDITIONS[0];
+  }
+
+  function layoutTunnel(){
+    const c = currentCond();
+    const rect = arena.getBoundingClientRect();
+    const availableW = Math.max(120, rect.width - 96);
+    const availableH = Math.max(80, rect.height - 64);
+    // Uniform scaling preserves A/W exactly on smaller screens.
+    const scale = Math.min(1, availableW/c.A, availableH/(c.W + 24));
+    const A = c.A * scale;
+    const W = c.W * scale;
+    // Keep gates narrow so the timed movement closely matches the nominal centre-to-centre path length A.
+    const gateW = Math.max(10, Math.min(14, W * 0.35));
+    const cx = rect.width/2;
+    const cy = rect.height/2;
+    const x0 = cx - A/2;
+    const x1 = cx + A/2;
+    const y0 = cy - W/2;
+
+    tunnel.style.left = x0 + "px";
+    tunnel.style.top = y0 + "px";
+    tunnel.style.width = A + "px";
+    tunnel.style.height = W + "px";
+
+    const startX = direction === "ltr" ? x0 : x1;
+    const finishX = direction === "ltr" ? x1 : x0;
+    const placeGate = (g, x) => {
+      g.style.width = gateW + "px";
+      g.style.height = W + "px";
+      g.style.left = (x - gateW/2) + "px";
+      g.style.top = y0 + "px";
+    };
+    placeGate(startGate, startX);
+    placeGate(finishGate, finishX);
+
+    geom = {
+      xMin: Math.min(x0,x1) - gateW/2,
+      xMax: Math.max(x0,x1) + gateW/2,
+      yMin: y0,
+      yMax: y0 + W,
+      start: {x:startX-gateW/2, y:y0, w:gateW, h:W},
+      finish:{x:finishX-gateW/2, y:y0, w:gateW, h:W}
+    };
+    updateCondReadout();
+  }
+
+  function updateCondReadout(){
+    const c = currentCond();
+    el("c-block").textContent = (blockPos+1) + "/" + order.length;
+    el("c-a").textContent = c.A;
+    el("c-w").textContent = c.W;
+    el("c-id").textContent = ID(c.A,c.W).toFixed(2);
+    el("c-err").textContent = errorsByBlock[order[blockPos]] || 0;
+    el("ro-err").textContent = Object.values(errorsByBlock).reduce((a,b)=>a+b,0);
+  }
+
+  function localPoint(e){
+    const r = arena.getBoundingClientRect();
+    return {x:e.clientX-r.left, y:e.clientY-r.top};
+  }
+  function inRect(p,r){ return p.x>=r.x && p.x<=r.x+r.w && p.y>=r.y && p.y<=r.y+r.h; }
+  function inPath(p){ return geom && p.x>=geom.xMin && p.x<=geom.xMax && p.y>=geom.yMin && p.y<=geom.yMax; }
+
+  function start(){
+    if (running) return;
+    repsPerBlock = Math.max(2, Math.min(20, parseInt(el("reps").value)||5));
+    if (trials.length === 0 && blockPos === 0 && rep === 0){
+      order = shuffle(CONDITIONS.map((_,i)=>i));
+      errorsByBlock = {};
+      direction = Math.random()<0.5 ? "ltr" : "rtl";
+    }
+    running = true;
+    steering = false;
+    layoutTunnel();
+    el("startBtn").textContent = "Pause";
+    el("exportBtn").disabled = trials.length===0;
+    el("status").innerHTML = "Running — press and hold on <b>START</b>, then steer to <b>END</b>.";
+  }
+
+  function pause(){
+    abortSteer(false);
+    running = false;
+    el("startBtn").textContent = trials.length ? "Resume" : "Start";
+    el("status").innerHTML = "Paused. <b>"+trials.length+"</b> traversals recorded.";
+  }
+
+  function reset(){
+    abortSteer(false);
+    running = false;
+    trials = []; blockPos = 0; rep = 0; errorsByBlock = {};
+    order = shuffle(CONDITIONS.map((_,i)=>i));
+    direction = Math.random()<0.5 ? "ltr" : "rtl";
+
+    el("startBtn").textContent = "Start";
+    el("status").textContent = "Ready. Press Start or the spacebar.";
+    el("exportBtn").disabled = true;
+    layoutTunnel();
+    draw();
+  }
+
+  function nextBlock(){
+    blockPos++;
+    rep = 0;
+    steering = false;
+    if (blockPos >= order.length){
+      finish();
+      return false;
+    }
+    direction = Math.random()<0.5 ? "ltr" : "rtl";
+    layoutTunnel();
+    return true;
+  }
+
+  function finish(){
+    running = false;
+    abortSteer(false);
+    el("startBtn").textContent = "Run again";
+    blockPos = 0; rep = 0;
+    order = shuffle(CONDITIONS.map((_,i)=>i));
+    direction = Math.random()<0.5 ? "ltr" : "rtl";
+    el("status").innerHTML = "Done — <b>"+trials.length+"</b> traversals recorded. Data stays on the plot.";
+
+    layoutTunnel();
+    draw();
+  }
+
+  function beginSteer(e){
+    steering = true;
+    pointerId = e.pointerId;
+    startT = performance.now();
+    arena.classList.add("steering");
+    try { arena.setPointerCapture(pointerId); } catch(_) {}
+    el("status").innerHTML = "Steering — stay inside the tunnel and reach <b>END</b>.";
+  }
+
+  function completeSteer(){
+    if (!steering) return;
+    const now = performance.now();
+    const c = currentCond();
+    trials.push({
+      block:order[blockPos], A:c.A, W:c.W, id:ID(c.A,c.W),
+      mt:now-startT, direction
+    });
+    rep++;
+    el("exportBtn").disabled = false;
+    abortSteer(false);
+    draw();
+
+    if (rep >= repsPerBlock){
+      if (!nextBlock()) return;
+    } else {
+      direction = direction === "ltr" ? "rtl" : "ltr";
+      layoutTunnel();
+    }
+    el("status").innerHTML = "Good — start the next traversal from <b>START</b>.";
+  }
+
+  function abortSteer(countError=true){
+    if (steering && countError && running){
+      const b = order[blockPos];
+      errorsByBlock[b] = (errorsByBlock[b]||0) + 1;
+      updateCondReadout();
+      arena.classList.add("err");
+      setTimeout(()=> arena.classList.remove("err"), 160);
+      el("status").innerHTML = "Outside the tunnel — try the same traversal again from <b>START</b>.";
+    }
+    steering = false;
+    startT = null;
+    arena.classList.remove("steering");
+    if (pointerId !== null){
+      try { if (arena.hasPointerCapture(pointerId)) arena.releasePointerCapture(pointerId); } catch(_) {}
+    }
+    pointerId = null;
+  }
+
+  // ---- Pointer handling ----
+  arena.addEventListener("pointerdown", (e) => {
+    if (!running || steering) return;
+    const p = localPoint(e);
+    if (inRect(p, geom.start)){
+      e.preventDefault();
+      beginSteer(e);
+    }
+  });
+
+  arena.addEventListener("pointermove", (e) => {
+    if (!running || !steering || e.pointerId !== pointerId) return;
+    const p = localPoint(e);
+    if (!inPath(p)) abortSteer(true);
+  });
+
+  arena.addEventListener("pointerup", (e) => {
+    if (!steering || e.pointerId !== pointerId) return;
+    const p = localPoint(e);
+    if (inRect(p, geom.finish)) completeSteer();
+    else abortSteer(true);
+  });
+  arena.addEventListener("pointercancel", (e) => {
+    if (steering && e.pointerId === pointerId) abortSteer(true);
+  });
+
+  // ---- Regression + plot ----
+  function blockMeans(){
+    const by = new Map();
+    for (const t of trials){
+      if (!by.has(t.block)) by.set(t.block, {id:t.id, sum:0, n:0});
+      const o = by.get(t.block); o.sum += t.mt; o.n++;
+    }
+    return [...by.values()].map(o => ({id:o.id, mt:o.sum/o.n, n:o.n})).sort((a,b)=>a.id-b.id);
+  }
+
+  function fit(points){
+    const n = points.length;
+    if (n < 2) return null;
+    let sx=0,sy=0,sxx=0,sxy=0,syy=0;
+    for (const p of points){ sx+=p.id; sy+=p.mt; sxx+=p.id*p.id; sxy+=p.id*p.mt; syy+=p.mt*p.mt; }
+    const d = n*sxx - sx*sx;
+    if (Math.abs(d) < 1e-9) return null;
+    const b = (n*sxy - sx*sy)/d;
+    const a = (sy - b*sx)/n;
+    const ssTot = syy - sy*sy/n;
+    let ssRes = 0;
+    for (const p of points){ const er = p.mt - (a+b*p.id); ssRes += er*er; }
+    const r2 = ssTot>1e-9 ? 1 - ssRes/ssTot : 1;
+    return {a,b,r2};
+  }
+
+  const canvas = el("plot"), ctx = canvas.getContext("2d");
+  function sizeCanvas(){
+    const dpr = window.devicePixelRatio || 1;
+    const r = canvas.getBoundingClientRect();
+    canvas.width = Math.max(1, r.width*dpr);
+    canvas.height = Math.max(1, r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    return r;
+  }
+
+  function draw(){
+    const r = sizeCanvas();
+    const W = r.width, H = r.height;
+    ctx.clearRect(0,0,W,H);
+    const m = {l:52, r:14, t:12, b:38};
+    const px0 = m.l, px1 = W-m.r, py0 = H-m.b, py1 = m.t;
+
+    const means = blockMeans();
+    const idMin = 0;
+    const idMax = Math.ceil(Math.max(...CONDITIONS.map(c=>ID(c.A,c.W)))/5)*5 + 1;
+    let mtMax = 3000;
+    for (const t of trials) mtMax = Math.max(mtMax, t.mt);
+    mtMax = Math.ceil(mtMax/1000)*1000;
+
+    const X = id => px0 + (id-idMin)/(idMax-idMin)*(px1-px0);
+    const Y = mt => py0 - mt/mtMax*(py0-py1);
+
+    ctx.strokeStyle = "#dbe2ea"; ctx.fillStyle = "#5d6a7d";
+    ctx.lineWidth = 1;
+    ctx.font = "12px ui-monospace, Menlo, monospace";
+    ctx.textAlign="right"; ctx.textBaseline="middle";
+    const yStep = mtMax <= 4000 ? 500 : 1000;
+    for (let mt=0; mt<=mtMax; mt+=yStep){
+      const y=Y(mt);
+      ctx.beginPath(); ctx.moveTo(px0,y); ctx.lineTo(px1,y); ctx.stroke();
+      ctx.fillText(mt, px0-8, y);
+    }
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    for (let id=0; id<=idMax; id+=5){
+      const x=X(id);
+      ctx.strokeStyle="#eef2f6";
+      ctx.beginPath(); ctx.moveTo(x,py1); ctx.lineTo(x,py0); ctx.stroke();
+      ctx.fillStyle="#5d6a7d"; ctx.fillText(id, x, py0+8);
+    }
+    ctx.strokeStyle="#1a2230"; ctx.lineWidth=1.4;
+    ctx.beginPath(); ctx.moveTo(px0,py1); ctx.lineTo(px0,py0); ctx.lineTo(px1,py0); ctx.stroke();
+    ctx.fillStyle="#1a2230"; ctx.font="12.5px system-ui, sans-serif";
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    ctx.fillText("Steering difficulty A / W", (px0+px1)/2, py0+20);
+    ctx.save();
+    ctx.translate(14,(py0+py1)/2); ctx.rotate(-Math.PI/2);
+    ctx.textBaseline="bottom"; ctx.fillText("Movement time (ms)", 0, 0);
+    ctx.restore();
+
+    ctx.fillStyle="rgba(14,124,134,0.28)";
+    for (const t of trials){
+      ctx.beginPath(); ctx.arc(X(t.id), Y(t.mt), 3, 0, 7); ctx.fill();
+    }
+
+    const f = fit(means);
+    if (f){
+      ctx.strokeStyle="#e63946"; ctx.lineWidth=2.2;
+      ctx.beginPath();
+      ctx.moveTo(X(idMin), Y(f.a + f.b*idMin));
+      ctx.lineTo(X(idMax), Y(f.a + f.b*idMax));
+      ctx.stroke();
+    }
+    ctx.fillStyle="#0e7c86";
+    for (const p of means){
+      ctx.beginPath(); ctx.arc(X(p.id), Y(p.mt), 6, 0, 7); ctx.fill();
+      ctx.strokeStyle="#fff"; ctx.lineWidth=1.5; ctx.stroke();
+    }
+
+    if (f){
+      el("eq-a").textContent = Math.round(f.a);
+      el("eq-b").textContent = Math.round(f.b);
+      el("eq-r").textContent = f.r2.toFixed(3);
+      el("ro-a").innerHTML = Math.round(f.a)+'<small> ms</small>';
+      el("ro-b").innerHTML = Math.round(f.b)+'<small> ms/unit</small>';
+      el("ro-r").textContent = f.r2.toFixed(3);
+    } else {
+      el("eq-a").textContent="–"; el("eq-b").textContent="–"; el("eq-r").textContent="–";
+      el("ro-a").innerHTML='–<small> ms</small>';
+      el("ro-b").innerHTML='–<small> ms/unit</small>';
+      el("ro-r").textContent='–';
+    }
+    el("ro-err").textContent = Object.values(errorsByBlock).reduce((a,b)=>a+b,0);
+  }
+
+  function exportCSV(){
+    const rows = [["trial","condition_index","A_px","W_px","ID_A_over_W","MT_ms","direction","total_condition_errors"]];
+    trials.forEach((t,i)=> rows.push([
+      i+1, t.block, t.A, t.W, t.id.toFixed(4), Math.round(t.mt), t.direction, errorsByBlock[t.block]||0
+    ]));
+    const csv = rows.map(r=>r.join(",")).join("\n");
+    const blob = new Blob([csv], {type:"text/csv"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "steering-law-data.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ---- Wiring ----
+  el("startBtn").addEventListener("click", ()=> running ? pause() : start());
+  el("resetBtn").addEventListener("click", reset);
+  el("exportBtn").addEventListener("click", exportCSV);
+  window.addEventListener("keydown", (e)=>{
+    if (e.target.tagName === "INPUT") return;
+    if (e.code === "Space"){
+      e.preventDefault();
+      running ? pause() : start();
+    }
+    if (e.key === "r" || e.key === "R") reset();
+  });
+  let rt;
+  window.addEventListener("resize", ()=>{
+    clearTimeout(rt);
+    rt=setTimeout(()=>{ layoutTunnel(); draw(); }, 80);
+  });
+
+  order = shuffle(CONDITIONS.map((_,i)=>i));
+  direction = Math.random()<0.5 ? "ltr" : "rtl";
+  layoutTunnel();
+  draw();
+})();
+</script>
+</body>
+</html>
